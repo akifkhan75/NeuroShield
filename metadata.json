@@ -1,0 +1,9 @@
+{
+  "name": "NeuroShield",
+  "description": "updated components to react-native",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "prompt": ""
+}
