@@ -203,7 +203,7 @@ const DashboardScreen = () => {
             </NavItemContainer>
             <SOSButtonContainer>
                 <SOSButton onPress={handleActivateEmergency}>
-                    <IconSOS size={32} color="white" />
+                    <IconSOS size={32} color="green" />
                     <SOSText>SOS</SOSText>
                 </SOSButton>
             </SOSButtonContainer>
