@@ -1,8 +1,16 @@
 import { Platform } from 'react-native';
 import { UserSettings, DangerZone, DangerZoneType, DangerZoneSeverity, FakeCallScript, PersonalInfo } from '../types';
 
-const API_BASE_URL_IOS = 'http://localhost:3001';
+const API_BASE_URL_IOS = 'http://192.168.100.220:3001';
 const API_BASE_URL_ANDROID = 'http://10.0.2.2:3001';
+
+// const API_BASE_URL = Platform.select({
+//     ios: 'http://192.168.100.220:3002',
+//     android: 'http://10.0.2.2:3002',
+//     default: 'http://182.177.10.13:3001'
+//   });
+
+// 182.177.10.13
 
 export const API_BASE_URL = Platform.OS === 'ios' ? API_BASE_URL_IOS : API_BASE_URL_ANDROID;
 
@@ -21,6 +29,7 @@ export const login = async (email: string, password: string): Promise<{user: Per
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
     });
+    console.log('resp', response)
     return handleResponse(response);
 };
 

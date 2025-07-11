@@ -33,5 +33,3 @@ target 'NeuroShield' do
     )
   end
 end
-
-pod 'react-native-sensors', :path => '../node_modules/react-native-sensors'
