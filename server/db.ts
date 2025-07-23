@@ -24,7 +24,7 @@ const initialSettings: UserSettings = {
     shareLocationOnSos: true,
     sendSmsOnSos: false,
     shakeToSosEnabled: true,
-    voiceActivationEnabled: true,
+    voiceActivationEnabled: false,
     accidentDetectionEnabled: false,
   },
 };
