@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String            @id @default(uuid())
+  email            String            @unique
+  passwordHash     String
+  fullName         String
+  bloodType        String?
+  allergies        String?
+  
+  locationSharingEnabled   Boolean @default(true)
+  shareLocationOnSos       Boolean @default(true)
+  sendSmsOnSos             Boolean @default(false)
+  shakeToSosEnabled        Boolean @default(true)
+  voiceActivationEnabled   Boolean @default(false)
+  accidentDetectionEnabled Boolean @default(false)
+
+  trustedContacts  TrustedContact[]
+  dangerZones      DangerZone[]      // Danger zones reported by the user
+
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model TrustedContact {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum DangerZoneSeverity {
+  low
+  medium
+  high
+}
+
+enum DangerZoneType {
+  Theft
+  Assault
+  Harassment
+  Poor_Lighting       @map("Poor Lighting")
+  Suspicious_Activity @map("Suspicious Activity")
+}
+
+model DangerZone {
+  id          String             @id @default(uuid())
+  top         String             // Storing as string to match existing frontend implementation e.g. "45%"
+  left        String             // Storing as string
+  severity    DangerZoneSeverity
+  type        DangerZoneType
+  description String
+  reportedAt  DateTime           @default(now())
+
+  userId      String?
+  user        User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
