@@ -1,4 +1,28 @@
 {
-  "name": "NeuroShield",
-  "displayName": "NeuroShield"
+  "expo": {
+    "name": "NeuroShield",
+    "slug": "neuroshield",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.neuroshield.app"
+    },
+    "android": {
+      "package": "com.neuroshield.app"
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0"
+          }
+        }
+      ]
+    ]
+  }
 }
