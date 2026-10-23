@@ -38,6 +38,9 @@ local.properties
 # node.js
 #
 node_modules/
+dist/
+.turbo/
+*.tsbuildinfo
 npm-debug.log
 yarn-error.log
 
