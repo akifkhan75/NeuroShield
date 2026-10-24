@@ -1,10 +1,91 @@
-# OSX
-#
-.DS_Store
+# ==============================================================================
+# NeuroShield Monorepo .gitignore
+# ==============================================================================
 
-# Xcode
-#
+# OS & Filesystem
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Environment Variables & Secrets (NEVER commit secrets!)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+!.env.template
+
+# Dependencies
+# ------------------------------------------------------------------------------
+node_modules/
+.pnpm-store/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Build Outputs & Monorepo Caches
+# ------------------------------------------------------------------------------
+dist/
+**/dist/
 build/
+**/build/
+.turbo/
+**/.turbo/
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Expo & React Native (Managed Workflow)
+# ------------------------------------------------------------------------------
+.expo/
+**/.expo/
+.expo-shared/
+**/.expo-shared/
+web-build/
+**/web-build/
+*.jsbundle
+.metro-health-check*
+
+# Native Prebuild Outputs (Generated dynamically via `expo prebuild` / `expo run:*`)
+# ------------------------------------------------------------------------------
+android/
+**/android/
+ios/
+**/ios/
+
+# Android & Gradle Artifacts
+# ------------------------------------------------------------------------------
+.gradle/
+**/.gradle/
+local.properties
+**/local.properties
+*.iml
+*.hprof
+.cxx/
+**/.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+*.keystore
+*.jks
+*.jar
+*.aar
+
+# iOS & Xcode Artifacts
+# ------------------------------------------------------------------------------
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -13,68 +94,54 @@ build/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-xcuserdata
+xcuserdata/
+**/xcuserdata/
 *.xccheckout
 *.moved-aside
-DerivedData
+DerivedData/
+**/DerivedData/
 *.hmap
 *.ipa
 *.xcuserstate
 **/.xcode.env.local
+**/Pods/
+**/Podfile.lock
+/vendor/bundle/
+**/vendor/bundle/
+.bundle/
+**/.bundle/
 
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
-local.properties
-*.iml
-*.hprof
-.cxx/
-*.keystore
-!debug.keystore
-.kotlin/
+# Testing & Coverage
+# ------------------------------------------------------------------------------
+coverage/
+**/coverage/
+*.lcov
+.nyc_output/
 
-# node.js
-#
-node_modules/
-dist/
-.turbo/
-*.tsbuildinfo
-npm-debug.log
-yarn-error.log
+# Logs
+# ------------------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/
-
+# Fastlane
+# ------------------------------------------------------------------------------
 **/fastlane/report.xml
 **/fastlane/Preview.html
 **/fastlane/screenshots
 **/fastlane/test_output
 
-# Bundle artifact
-*.jsbundle
-
-# Ruby / CocoaPods
-**/Pods/
-/vendor/bundle/
-
-# Temporary files created by Metro to check the health of the file watcher
-.metro-health-check*
-.expo/
+# IDEs & Editors
+# ------------------------------------------------------------------------------
+.idea/
+**/.idea/
 .vscode/
-
-# testing
-/coverage
-
-# Yarn
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+**/.vscode/
+*.sublime-workspace
+*.sublime-project
+*.swp
+*.swo
+*~

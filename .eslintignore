@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+.turbo/
+.expo/
+android/
+ios/
+apps/mobile/android/
+apps/mobile/ios/
+coverage/
+*.jsbundle
