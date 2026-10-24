@@ -194,7 +194,7 @@ const SafetyAssistantScreen = () => {
           renderItem={renderMessageItem}
           keyExtractor={(item, index) => index.toString()}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          ListFooterComponent={isLoading ? <TypingIndicator /> : null}
+          ListFooterComponent={isLoading ? <TypingIndicator /> : undefined}
         />
 
         <InputBar>

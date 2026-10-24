@@ -142,7 +142,7 @@ const ErrorText = styled(Text)`
 
 const Onboarding = ({ onGetStarted }: { onGetStarted: () => void }) => (
     <OnboardingContainer>
-        <OnboardingImage source={{ uri: 'https://i.imgur.com/gK2xG4T.jpg' }}>
+        <OnboardingImage source={require('../../assets/images/onboarding_hero.jpg')} resizeMode="cover">
         </OnboardingImage>
         <OnboardingContent>
             <OnboardingTitle>Stay Safe</OnboardingTitle>

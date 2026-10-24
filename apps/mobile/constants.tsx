@@ -1,6 +1,8 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Feather';
+import Feather from '@expo/vector-icons/Feather';
 import { StyleProp, TextStyle } from 'react-native';
+
+const Icon = Feather as any;
 
 interface IconProps {
   size?: number;

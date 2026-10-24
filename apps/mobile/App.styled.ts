@@ -51,16 +51,20 @@ export const HeaderTextContainer = styled(View)`
 `;
 
 export const HelloText = styled(Text)`
-    font-size: 20px;
-    font-weight: 600;
-    color: #1f2937;
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.7);
 `;
 
 export const LocationText = styled(Text)`
     font-size: 14px;
-    color: #6b7280;
+    color: #94a3b8;
     margin-top: 4px;
+    font-weight: 500;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.7);
 `;
+
 
 export const VoiceGuardText = styled(Text)`
     font-size: 12px;

@@ -51,7 +51,7 @@ export class AiService {
         },
       });
 
-      const script = this.parseJsonResponse<FakeCallScript>(response.text);
+      const script = this.parseJsonResponse<FakeCallScript>(response.text || '');
       return script || fallbackScript;
     } catch (error) {
       this.logger.error("Error fetching fake call script from Gemini", error);
@@ -76,7 +76,7 @@ export class AiService {
         },
       });
 
-      const parsed = this.parseJsonResponse<{tips: string[]}>(response.text);
+      const parsed = this.parseJsonResponse<{tips: string[]}>(response.text || '');
       return parsed?.tips || fallbackTips;
     } catch (error) {
       this.logger.error("Error fetching self-defense tips from Gemini", error);

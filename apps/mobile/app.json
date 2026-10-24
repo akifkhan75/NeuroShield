@@ -11,18 +11,6 @@
     },
     "android": {
       "package": "com.neuroshield.app"
-    },
-    "plugins": [
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 34,
-            "buildToolsVersion": "34.0.0"
-          }
-        }
-      ]
-    ]
+    }
   }
 }

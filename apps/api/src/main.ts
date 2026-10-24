@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module.js';
+import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
@@ -9,4 +9,4 @@ async function bootstrap() {
   const port = process.env.API_PORT || 3001;
   await app.listen(port, '0.0.0.0');
 }
-await bootstrap();
+bootstrap();
