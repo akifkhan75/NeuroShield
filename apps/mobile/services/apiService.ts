@@ -36,7 +36,7 @@ export const signup = async (name: string, email: string, password: string): Pro
     const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ fullName: name, name, email, password }),
     });
     if (!response.ok) throw new Error('HTTP error');
     const data = await response.json();
@@ -66,14 +66,15 @@ export const reportDangerZone = async (details: { type: DangerZoneType; severity
 
 // AI Services
 export const getFakeCallScript = async (): Promise<FakeCallScript> => {
-    const response = await fetch(`${API_BASE_URL}/api/v1/ai/fake-call-script`);
-    if (!response.ok) throw new Error('HTTP error');
-    return response.json();
+    return apiClient.getFakeCallScript();
 };
 
 export const getSelfDefenseTips = async (): Promise<string[]> => {
-    const response = await fetch(`${API_BASE_URL}/api/v1/ai/self-defense-tips`);
-    if (!response.ok) throw new Error('HTTP error');
-    return response.json();
+    return apiClient.getSelfDefenseTips();
 };
+
+export const safetyChat = async (message: string, history?: any[]): Promise<{ response: string }> => {
+    return apiClient.safetyChat(message, history);
+};
+
 

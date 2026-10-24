@@ -6,13 +6,16 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "tsc -w"
+    "dev": "tsc -w",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage"
   },
   "dependencies": {
     "@neuroshield/types": "workspace:*"
   },
   "devDependencies": {
+    "@neuroshield/tsconfig": "workspace:*",
     "typescript": "^5.0.4",
-    "@neuroshield/tsconfig": "workspace:*"
+    "vitest": "^4.1.2"
   }
 }

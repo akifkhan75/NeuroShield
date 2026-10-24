@@ -1,16 +1,25 @@
 import { UserSettings, DangerZone, DangerZoneType, DangerZoneSeverity, FakeCallScript, PersonalInfo } from '@neuroshield/types';
 
+export interface AuthResponse {
+  user: PersonalInfo;
+  token: string;
+}
+
 export class ApiClient {
   private baseUrl: string;
   private token: string | null = null;
 
   constructor(baseUrl: string, token: string | null = null) {
-    this.baseUrl = baseUrl;
+    this.baseUrl = baseUrl.replace(/\/+$/, '');
     this.token = token;
   }
 
   setToken(token: string | null) {
     this.token = token;
+  }
+
+  getToken(): string | null {
+    return this.token;
   }
 
   private getHeaders(extraHeaders: Record<string, string> = {}): Record<string, string> {
@@ -29,6 +38,34 @@ export class ApiClient {
     return response.json();
   }
 
+  // Authentication
+  async login(email: string, password: string): Promise<AuthResponse> {
+    const response = await fetch(`${this.baseUrl}/api/v1/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await this.handleResponse<AuthResponse>(response);
+    if (data.token) {
+      this.setToken(data.token);
+    }
+    return data;
+  }
+
+  async signup(name: string, email: string, password: string): Promise<AuthResponse> {
+    const response = await fetch(`${this.baseUrl}/api/v1/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fullName: name, name, email, password }),
+    });
+    const data = await this.handleResponse<AuthResponse>(response);
+    if (data.token) {
+      this.setToken(data.token);
+    }
+    return data;
+  }
+
+  // Settings
   async getSettings(): Promise<UserSettings> {
     const response = await fetch(`${this.baseUrl}/api/v1/settings`, {
       headers: this.getHeaders(),
@@ -45,6 +82,7 @@ export class ApiClient {
     return this.handleResponse(response);
   }
 
+  // Danger Zones
   async getDangerZones(): Promise<DangerZone[]> {
     const response = await fetch(`${this.baseUrl}/api/v1/danger-zones`, {
       headers: this.getHeaders(),
@@ -52,7 +90,7 @@ export class ApiClient {
     return this.handleResponse(response);
   }
 
-  async reportDangerZone(details: { type: DangerZoneType; severity: DangerZoneSeverity; description: string; }): Promise<DangerZone> {
+  async reportDangerZone(details: { type: DangerZoneType; severity: DangerZoneSeverity; description: string }): Promise<DangerZone> {
     const response = await fetch(`${this.baseUrl}/api/v1/danger-zones`, {
       method: 'POST',
       headers: this.getHeaders({ 'Content-Type': 'application/json' }),
@@ -60,5 +98,28 @@ export class ApiClient {
     });
     return this.handleResponse(response);
   }
-}
 
+  // AI Services
+  async getFakeCallScript(): Promise<FakeCallScript> {
+    const response = await fetch(`${this.baseUrl}/api/v1/ai/fake-call-script`, {
+      headers: this.getHeaders(),
+    });
+    return this.handleResponse(response);
+  }
+
+  async getSelfDefenseTips(): Promise<string[]> {
+    const response = await fetch(`${this.baseUrl}/api/v1/ai/self-defense-tips`, {
+      headers: this.getHeaders(),
+    });
+    return this.handleResponse(response);
+  }
+
+  async safetyChat(message: string, history: Array<{ role: string; parts: Array<{ text: string }> }> = []): Promise<{ response: string }> {
+    const response = await fetch(`${this.baseUrl}/api/v1/ai/safety-chat`, {
+      method: 'POST',
+      headers: this.getHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify({ message, history }),
+    });
+    return this.handleResponse(response);
+  }
+}

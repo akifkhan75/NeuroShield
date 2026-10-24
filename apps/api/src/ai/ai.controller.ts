@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { AiService } from './ai.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -16,5 +16,11 @@ export class AiController {
   @Get('self-defense-tips')
   async getSelfDefenseTips() {
     return this.aiService.getSelfDefenseTips();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('safety-chat')
+  async safetyChat(@Body() body: { message: string; history?: any[] }) {
+    return this.aiService.safetyChat(body.message, body.history);
   }
 }
