@@ -77,7 +77,7 @@ const ButtonText = styled(Text)`
 
 const FollowMeScreen = () => {
   const navigation = useNavigation();
-  const shareLink = `https://insafe.example/follow/jS8fD9kL`;
+  const shareLink = `https://lumo.example/follow/jS8fD9kL`;
   const [monitoringActive, setMonitoringActive] = useState(false);
   const onClose = () => navigation.goBack();
   

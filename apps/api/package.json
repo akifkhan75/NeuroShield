@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.8.0",
-    "@neuroshield/types": "workspace:*",
+    "@lumo/types": "workspace:*",
     "@nestjs/common": "^12.0.1",
     "@nestjs/core": "^12.0.1",
     "@nestjs/jwt": "^12.0.2",

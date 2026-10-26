@@ -146,7 +146,7 @@ const Onboarding = ({ onGetStarted }: { onGetStarted: () => void }) => (
         </OnboardingImage>
         <OnboardingContent>
             <OnboardingTitle>Stay Safe</OnboardingTitle>
-            <OnboardingTitle>with <OnboardingTitleHighlight>InSafe</OnboardingTitleHighlight></OnboardingTitle>
+            <OnboardingTitle>with <OnboardingTitleHighlight>Lumo</OnboardingTitleHighlight></OnboardingTitle>
             <OnboardingButton onPress={onGetStarted}>
                 <OnboardingButtonText>Get Started</OnboardingButtonText>
                 <IconArrowLeft size={20} color="white" />

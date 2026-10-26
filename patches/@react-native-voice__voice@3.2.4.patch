@@ -2,7 +2,7 @@ diff --git a/android/build.gradle b/android/build.gradle
 index 8fce879dcf7a0d92209550aebde7be63b0aba530..5f147cb97e88c66489ba46642a357c2db4a755bc 100644
 --- a/android/build.gradle
 +++ b/android/build.gradle
-@@ -2,66 +2,46 @@ apply plugin: 'com.android.library'
+@@ -2,66 +2,47 @@ apply plugin: 'com.android.library'
  
  repositories {
      mavenLocal()

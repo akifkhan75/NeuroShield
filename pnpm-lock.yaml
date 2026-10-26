@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@react-native-voice/voice@3.2.4':
-    hash: zimcpwwmgjoflduibshlu2oh74
+    hash: 4hxikfyfa3bgw3fotfk4ilxncq
     path: patches/@react-native-voice__voice@3.2.4.patch
 
 importers:
@@ -28,6 +28,9 @@ importers:
       '@google/genai':
         specifier: ^1.8.0
         version: 1.52.0
+      '@lumo/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@nestjs/common':
         specifier: ^12.0.1
         version: 12.1.2(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -43,9 +46,6 @@ importers:
       '@nestjs/platform-express':
         specifier: ^12.0.1
         version: 12.1.2(@nestjs/common@12.1.2(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@12.1.2)
-      '@neuroshield/types':
-        specifier: workspace:*
-        version: link:../../packages/types
       '@prisma/client':
         specifier: ^5.22.0
         version: 5.22.0(prisma@5.22.0)
@@ -134,15 +134,15 @@ importers:
       '@expo/vector-icons':
         specifier: ^15.0.2
         version: 15.1.1(expo-font@58.0.9(expo@58.0.17(@babel/core@7.29.7)(@expo/dom-webview@57.0.1)(react-native@0.88.0(@babel/core@7.29.7)(@react-native-community/cli@19.0.0(typescript@6.0.3))(@react-native/metro-config@0.80.1(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)(typescript@6.0.3))(react-native@0.88.0(@babel/core@7.29.7)(@react-native-community/cli@19.0.0(typescript@6.0.3))(@react-native/metro-config@0.80.1(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0))(react-native@0.88.0(@babel/core@7.29.7)(@react-native-community/cli@19.0.0(typescript@6.0.3))(@react-native/metro-config@0.80.1(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
-      '@neuroshield/api-client':
+      '@lumo/api-client':
         specifier: workspace:*
         version: link:../../packages/api-client
-      '@neuroshield/types':
+      '@lumo/types':
         specifier: workspace:*
         version: link:../../packages/types
       '@react-native-voice/voice':
         specifier: ^3.2.4
-        version: 3.2.4(patch_hash=zimcpwwmgjoflduibshlu2oh74)(react-native@0.88.0(@babel/core@7.29.7)(@react-native-community/cli@19.0.0(typescript@6.0.3))(@react-native/metro-config@0.80.1(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))
+        version: 3.2.4(patch_hash=4hxikfyfa3bgw3fotfk4ilxncq)(react-native@0.88.0(@babel/core@7.29.7)(@react-native-community/cli@19.0.0(typescript@6.0.3))(@react-native/metro-config@0.80.1(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))
       '@react-native/new-app-screen':
         specifier: 0.80.1
         version: 0.80.1(@types/react@19.3.0)(react-native@0.88.0(@babel/core@7.29.7)(@react-native-community/cli@19.0.0(typescript@6.0.3))(@react-native/metro-config@0.80.1(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
@@ -261,11 +261,11 @@ importers:
 
   packages/api-client:
     dependencies:
-      '@neuroshield/types':
+      '@lumo/types':
         specifier: workspace:*
         version: link:../types
     devDependencies:
-      '@neuroshield/tsconfig':
+      '@lumo/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       typescript:
@@ -279,7 +279,7 @@ importers:
 
   packages/types:
     devDependencies:
-      '@neuroshield/tsconfig':
+      '@lumo/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
       typescript:
@@ -9571,7 +9571,7 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@react-native-voice/voice@3.2.4(patch_hash=zimcpwwmgjoflduibshlu2oh74)(react-native@0.88.0(@babel/core@7.29.7)(@react-native-community/cli@19.0.0(typescript@6.0.3))(@react-native/metro-config@0.80.1(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))':
+  '@react-native-voice/voice@3.2.4(patch_hash=4hxikfyfa3bgw3fotfk4ilxncq)(react-native@0.88.0(@babel/core@7.29.7)(@react-native-community/cli@19.0.0(typescript@6.0.3))(@react-native/metro-config@0.80.1(@babel/core@7.29.7))(@types/react@19.3.0)(react@19.3.0))':
     dependencies:
       '@expo/config-plugins': 2.0.4
       invariant: 2.2.4

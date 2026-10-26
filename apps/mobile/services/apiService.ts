@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
-import { UserSettings, DangerZone, DangerZoneType, DangerZoneSeverity, FakeCallScript, PersonalInfo } from '@neuroshield/types';
-import { ApiClient } from '@neuroshield/api-client';
+import { UserSettings, DangerZone, DangerZoneType, DangerZoneSeverity, FakeCallScript, PersonalInfo } from '@lumo/types';
+import { ApiClient } from '@lumo/api-client';
 
 const LAN_IP = '192.168.100.81';
 export const API_BASE_URL = `http://${LAN_IP}:3005`;

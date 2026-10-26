@@ -4,7 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from '../src/app.module';
 
-describe('NeuroShield API (e2e integration)', () => {
+describe('Lumo API (e2e integration)', () => {
   let app: INestApplication;
   let authToken: string;
   const testUser = {

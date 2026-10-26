@@ -1,5 +1,5 @@
 {
-  "name": "@neuroshield/api-client",
+  "name": "@lumo/api-client",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -11,10 +11,10 @@
     "test:cov": "vitest run --coverage"
   },
   "dependencies": {
-    "@neuroshield/types": "workspace:*"
+    "@lumo/types": "workspace:*"
   },
   "devDependencies": {
-    "@neuroshield/tsconfig": "workspace:*",
+    "@lumo/tsconfig": "workspace:*",
     "typescript": "^5.0.4",
     "vitest": "^4.1.2"
   }
