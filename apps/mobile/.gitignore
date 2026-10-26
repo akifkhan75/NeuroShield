@@ -1,0 +1,12 @@
+# Expo mobile app .gitignore
+node_modules/
+.expo/
+dist/
+web-build/
+
+# Native prebuilds (generated via `npx expo prebuild` from app.json)
+/android
+/ios
+
+# Metro file watcher health check
+.metro-health-check*

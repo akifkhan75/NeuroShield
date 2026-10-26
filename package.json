@@ -18,5 +18,10 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "pnpm@9.0.0"
+  "packageManager": "pnpm@9.0.0",
+  "pnpm": {
+    "patchedDependencies": {
+      "@react-native-voice/voice@3.2.4": "patches/@react-native-voice__voice@3.2.4.patch"
+    }
+  }
 }

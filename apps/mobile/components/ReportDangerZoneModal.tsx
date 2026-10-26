@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { DangerZoneType, DangerZoneSeverity } from '../types';
@@ -122,7 +122,7 @@ const ReportDangerZoneScreen = () => {
 
   const handleSubmit = async () => {
     if (!description) {
-      alert("Please provide a brief description.");
+      Alert.alert("Notice", "Please provide a brief description.");
       return;
     }
     setIsSubmitting(true);

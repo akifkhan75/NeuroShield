@@ -123,16 +123,38 @@ const NotifyingText = styled(Text)`
 
 // --- Components --- //
 
-const ContactCircle = ({img, angle}: {img: string, angle: number}) => (
-    <View style={{ position: 'absolute', top: '50%', left: '50%', marginTop: -32, marginLeft: -32, transform: [{ rotate: `${angle}deg` }, { translateX: 110 }] }}>
-        <ContactCircleImage source={{uri: img}}/>
+import Feather from '@expo/vector-icons/Feather';
+
+const ContactCircle = ({role, icon, color, angle}: {role: string, icon: string, color: string, angle: number}) => (
+    <View style={{ position: 'absolute', top: '50%', left: '50%', marginTop: -32, marginLeft: -32, transform: [{ rotate: `${angle}deg` }, { translateX: 110 }, { rotate: `-${angle}deg` }] }}>
+        <View style={{
+            width: 64,
+            height: 64,
+            borderRadius: 32,
+            borderWidth: 3,
+            borderColor: '#ffffff',
+            backgroundColor: color,
+            alignItems: 'center',
+            justifyContent: 'center',
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.35,
+            shadowRadius: 6,
+            elevation: 8,
+        }}>
+            <Feather name={icon as any} size={22} color="#ffffff" />
+            <Text style={{ color: '#ffffff', fontSize: 10, fontWeight: '800', marginTop: 2, letterSpacing: 0.5 }}>{role}</Text>
+        </View>
     </View>
 );
 
 const contacts = [
-    { name: "Design", img: "https://i.imgur.com/kP4fnwV.jpg" }, { name: "User2", img: "https://i.imgur.com/j1Jc8ay.jpg" },
-    { name: "User3", img: "https://i.imgur.com/E1I3uA3.jpg" }, { name: "User4", img: "https://i.imgur.com/yF57G14.jpg" },
-    { name: "User5", img: "https://i.imgur.com/Jkp5Kqf.jpg" }, { name: "User6", img: "https://i.imgur.com/KBOeygP.jpg" },
+    { name: "Police", role: "POLICE", icon: "shield", color: "#1e40af" },
+    { name: "EMS", role: "EMS", icon: "activity", color: "#dc2626" },
+    { name: "Mom", role: "MOM", icon: "heart", color: "#db2777" },
+    { name: "Security", role: "SEC", icon: "lock", color: "#d97706" },
+    { name: "Dad", role: "DAD", icon: "phone", color: "#2563eb" },
+    { name: "Guard", role: "GUARD", icon: "users", color: "#059669" },
 ];
 
 const DefenseGuide = ({ onFinish }: { onFinish: () => void }) => {
@@ -144,8 +166,8 @@ const DefenseGuide = ({ onFinish }: { onFinish: () => void }) => {
     }, []);
 
     return (
-        <View style={StyleSheet.absoluteFillObject}>
-            <View style={{...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 20, alignItems: 'center', justifyContent: 'center', padding: 32}}>
+        <View style={StyleSheet.absoluteFill}>
+            <View style={[StyleSheet.absoluteFill, { backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 20, alignItems: 'center', justifyContent: 'center', padding: 32 }]}>
                 <Text style={{fontSize: 28, fontWeight: 'bold', color: 'white', marginBottom: 16, textAlign: 'center'}}>SELF-DEFENSE MODE</Text>
                  <IconVolumeUp size={48} color="#fbbF04" />
                  <Text style={{fontWeight: '600', color: '#fbbF04', marginBottom: 24, marginTop: 16}}>LOUD ALARM ACTIVE</Text>

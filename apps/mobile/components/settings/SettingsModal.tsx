@@ -114,8 +114,8 @@ const SettingsScreen = () => {
                     <Title>Settings</Title>
                 </Header>
                 <View>
-                <SettingItem icon={<IconProfile size={24} color="#16a34a" />} title="Update Profile" description="View and edit your profile" onPress={() => navigation.navigate('ProfileSettings')} />
-                <SettingItem icon={<IconContact size={24} color="#16a34a" />} title="Contact" description="Emergency Contact" onPress={() => navigation.navigate('ContactSettings')} />
+                <SettingItem icon={<IconProfile size={24} color="#16a34a" />} title="Update Profile" description="View and edit your profile" onPress={() => navigation.navigate('ProfileSettings', { currentSettings, onSave })} />
+                <SettingItem icon={<IconContact size={24} color="#16a34a" />} title="Contact" description="Emergency Contact" onPress={() => navigation.navigate('ContactSettings', { currentSettings, onSave })} />
                 <SettingItem 
                     icon={<IconLocation size={24} color="#16a34a" />} 
                     title="Show My Location" 
@@ -124,7 +124,7 @@ const SettingsScreen = () => {
                     isToggleOn={currentSettings.security.locationSharingEnabled}
                     onToggleChange={handleToggleLocation}
                 />
-                <SettingItem icon={<IconAlert size={24} color="#16a34a" />} title="Setup Alert" description="Configure alert settings" onPress={() => navigation.navigate('AlertSettings')} />
+                <SettingItem icon={<IconAlert size={24} color="#16a34a" />} title="Setup Alert" description="Configure alert settings" onPress={() => navigation.navigate('AlertSettings', { currentSettings, onSave })} />
                 <View style={{marginTop: 16, borderTopWidth: 1, borderColor: '#e5e7eb', paddingTop: 8}} />
                 <SettingItem icon={<IconLogout size={24} color="#16a34a" />} title="Logout" description="Click here to logout" onPress={() => {
                     onClose();

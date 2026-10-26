@@ -2,33 +2,48 @@ import { Platform } from 'react-native';
 import { UserSettings, DangerZone, DangerZoneType, DangerZoneSeverity, FakeCallScript, PersonalInfo } from '@neuroshield/types';
 import { ApiClient } from '@neuroshield/api-client';
 
-const API_BASE_URL_IOS = 'http://192.168.100.220:3001';
-const API_BASE_URL_ANDROID = 'http://10.0.2.2:3001';
-
-export const API_BASE_URL = Platform.OS === 'ios' ? API_BASE_URL_IOS : API_BASE_URL_ANDROID;
+const LAN_IP = '192.168.100.81';
+export const API_BASE_URL = `http://${LAN_IP}:3005`;
 
 const apiClient = new ApiClient(API_BASE_URL);
 
+let currentToken: string | null = null;
+
+export const setAuthToken = (token: string | null) => {
+    currentToken = token;
+    apiClient.setToken(token);
+};
+
+export const getAuthToken = () => currentToken;
+
 // Auth
-export const login = async (email: string, password: string): Promise<{user: PersonalInfo}> => {
-    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+export const login = async (email: string, password: string): Promise<{user: PersonalInfo; token: string}> => {
+    const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
     });
-    console.log('resp', response)
+    console.log('resp', response);
     if (!response.ok) throw new Error('HTTP error');
-    return response.json();
+    const data = await response.json();
+    if (data.token) {
+        setAuthToken(data.token);
+    }
+    return data;
 };
 
-export const signup = async (name: string, email: string, password: string): Promise<{user: PersonalInfo}> => {
-    const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+export const signup = async (name: string, email: string, password: string): Promise<{user: PersonalInfo; token: string}> => {
+    const response = await fetch(`${API_BASE_URL}/api/v1/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ fullName: name, name, email, password }),
     });
     if (!response.ok) throw new Error('HTTP error');
-    return response.json();
+    const data = await response.json();
+    if (data.token) {
+        setAuthToken(data.token);
+    }
+    return data;
 };
 
 // Settings
@@ -51,13 +66,15 @@ export const reportDangerZone = async (details: { type: DangerZoneType; severity
 
 // AI Services
 export const getFakeCallScript = async (): Promise<FakeCallScript> => {
-    const response = await fetch(`${API_BASE_URL}/api/ai/fake-call-script`);
-    if (!response.ok) throw new Error('HTTP error');
-    return response.json();
+    return apiClient.getFakeCallScript();
 };
 
 export const getSelfDefenseTips = async (): Promise<string[]> => {
-    const response = await fetch(`${API_BASE_URL}/api/ai/self-defense-tips`);
-    if (!response.ok) throw new Error('HTTP error');
-    return response.json();
+    return apiClient.getSelfDefenseTips();
 };
+
+export const safetyChat = async (message: string, history?: any[]): Promise<{ response: string }> => {
+    return apiClient.safetyChat(message, history);
+};
+
+

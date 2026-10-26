@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { IconArrowLeft, IconBot } from '../constants';
 import { ChatMessage } from '../types';
+import { safetyChat } from '../services/apiService';
 
 const Container = styled(SafeAreaView)`
   flex: 1;
@@ -129,38 +130,9 @@ const SafetyAssistantScreen = () => {
           parts: [{ text: msg.text }]
       }));
 
-      const response = await fetch('/api/ai/safety-chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          history: history,
-          message: currentInput
-        }),
-      });
-      
-      if (!response.ok || !response.body) {
-        throw new Error(`Request failed with status ${response.status}`);
-      }
-      
+      const res = await safetyChat(currentInput, history);
+      setMessages(prev => [...prev, { role: 'model', text: res.response || 'Please stay safe and contact emergency services if in danger.' }]);
       setIsLoading(false);
-      setMessages(prev => [...prev, { role: 'model', text: '' }]);
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        setMessages(prev => {
-          const lastMsgIndex = prev.length - 1;
-          const updatedMessages = [...prev];
-          updatedMessages[lastMsgIndex] = {
-              ...updatedMessages[lastMsgIndex],
-              text: updatedMessages[lastMsgIndex].text + chunk
-          };
-          return updatedMessages;
-        });
-      }
     } catch (error) {
       console.error('Chat error:', error);
       setMessages(prev => [...prev, { role: 'model', text: 'Sorry, I am having trouble connecting. Please try again later.' }]);
@@ -194,7 +166,7 @@ const SafetyAssistantScreen = () => {
           renderItem={renderMessageItem}
           keyExtractor={(item, index) => index.toString()}
           onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-          ListFooterComponent={isLoading ? <TypingIndicator /> : null}
+          ListFooterComponent={isLoading ? <TypingIndicator /> : undefined}
         />
 
         <InputBar>

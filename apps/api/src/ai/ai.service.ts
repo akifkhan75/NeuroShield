@@ -51,7 +51,7 @@ export class AiService {
         },
       });
 
-      const script = this.parseJsonResponse<FakeCallScript>(response.text);
+      const script = this.parseJsonResponse<FakeCallScript>(response.text || '');
       return script || fallbackScript;
     } catch (error) {
       this.logger.error("Error fetching fake call script from Gemini", error);
@@ -76,11 +76,36 @@ export class AiService {
         },
       });
 
-      const parsed = this.parseJsonResponse<{tips: string[]}>(response.text);
+      const parsed = this.parseJsonResponse<{tips: string[]}>(response.text || '');
       return parsed?.tips || fallbackTips;
     } catch (error) {
       this.logger.error("Error fetching self-defense tips from Gemini", error);
       return fallbackTips;
+    }
+  }
+
+  async safetyChat(message: string, history: Array<{ role: string; parts: Array<{ text: string }> }> = []): Promise<{ response: string }> {
+    const fallbackResponse = {
+      response: "Stay alert, move toward well-lit public areas, and trigger the SOS button if you feel unsafe."
+    };
+
+    if (!this.aiClient) return fallbackResponse;
+
+    try {
+      const response = await this.aiClient.models.generateContent({
+        model: "gemini-1.5-flash",
+        contents: `You are NeuroShield AI safety assistant. Provide concise, direct personal safety advice. User query: "${message}".`,
+        config: {
+          temperature: 0.7,
+        },
+      });
+
+      return {
+        response: response.text?.trim() || fallbackResponse.response,
+      };
+    } catch (error) {
+      this.logger.error("Error generating safety chat response from Gemini", error);
+      return fallbackResponse;
     }
   }
 }

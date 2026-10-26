@@ -6,7 +6,7 @@ services:
       POSTGRES_PASSWORD: neuroshield_password
       POSTGRES_DB: neuroshield_db
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
       - postgres_data_v2:/var/lib/postgresql/data
     healthcheck:

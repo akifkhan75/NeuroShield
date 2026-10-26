@@ -1,0 +1,13 @@
+# API Dockerignore
+.git
+.vscode
+.idea
+node_modules
+dist
+.turbo
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+*.log
+**/.DS_Store

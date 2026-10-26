@@ -117,8 +117,8 @@ const FollowMeScreen = () => {
         </View>
 
         <MapContainer>
-           <ImageBackground source={{ uri: 'https://i.imgur.com/5uV1f3D.png' }} style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-                <Image source={{ uri: 'https://i.imgur.com/n16shc2.png' }} style={{width: 56, height: 56, borderRadius: 28, borderWidth: 4, borderColor: 'white'}} />
+           <ImageBackground source={require('../assets/images/map_bg.jpg')} style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                <Image source={require('../assets/images/user_avatar.jpg')} style={{width: 56, height: 56, borderRadius: 28, borderWidth: 4, borderColor: 'white'}} />
            </ImageBackground>
            <View style={{position: 'absolute', bottom: 16, left: 16, backgroundColor: 'white', padding: 8, borderRadius: 8}}>
              <Text style={{fontWeight: '600'}}>Status: <Text style={{color: monitoringActive ? '#16a34a' : '#6b7280'}}>{monitoringActive ? 'Active' : 'Inactive'}</Text></Text>

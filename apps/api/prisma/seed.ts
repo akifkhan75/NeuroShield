@@ -8,10 +8,12 @@ async function main() {
   // Create mock user
   const user = await prisma.user.upsert({
     where: { email: 'josim@example.com' },
-    update: {},
+    update: {
+      passwordHash: '$argon2id$v=19$m=65536,p=4,t=3$ngZIWfC2Tyc0e1Dn/UeMig$TIXvSP83BtSlABfoPTVk70Dz8nBewXlin8VT5l90IT8',
+    },
     create: {
       email: 'josim@example.com',
-      passwordHash: '$argon2id$v=19$m=65536,t=3,p=4$dummyhash', // Placeholder hash
+      passwordHash: '$argon2id$v=19$m=65536,p=4,t=3$ngZIWfC2Tyc0e1Dn/UeMig$TIXvSP83BtSlABfoPTVk70Dz8nBewXlin8VT5l90IT8',
       fullName: 'Josim',
       bloodType: 'O+',
       allergies: 'None',

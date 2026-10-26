@@ -1,11 +1,14 @@
-
 module.exports = {
-  preset: 'react-native',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  setupFiles: [
-    "./jest-setup.js"
-  ],
+  preset: 'jest-expo',
   transformIgnorePatterns: [
-    "node_modules/(?!(react-native|@react-native|react-native-vector-icons)/)"
+    'node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|@neuroshield/.*)',
+  ],
+  setupFiles: ['./jest-setup.js'],
+  collectCoverageFrom: [
+    'hooks/**/*.{ts,tsx}',
+    'services/**/*.{ts,tsx}',
+    'components/**/*.{ts,tsx}',
+    '!**/__tests__/**',
+    '!**/node_modules/**',
   ],
 };

@@ -50,9 +50,12 @@ const DangerZonePin = ({ zone }: { zone: DangerZone }) => {
         opacity: pulseAnim.interpolate({ inputRange: [0, 1], outputRange: [0.7, 0] }),
     };
 
+    const top = zone?.location?.top ?? (zone as any)?.top ?? '50%';
+    const left = zone?.location?.left ?? (zone as any)?.left ?? '50%';
+
     return (
         <DangerZonePinContainer
-            style={{ top: zone.location.top as any, left: zone.location.left as any }}
+            style={{ top: top as any, left: left as any }}
             onPress={() => Alert.alert(`Severity: ${zone.severity.toUpperCase()}`, `${zone.type}: ${zone.description}`)}
         >
             <PinPulseCircle style={pulseStyle} pulseColor={color} />
@@ -167,7 +170,7 @@ const DashboardScreen = () => {
   return (
     <Container>
       <MapViewContainer>
-         <MapImage source={{ uri: 'https://i.imgur.com/5uV1f3D.png' }}>
+         <MapImage source={require('./assets/images/map_bg.jpg')}>
             {dangerZones.map(zone => <DangerZonePin key={zone.id} zone={zone} />)}
          </MapImage>
          <Header>
@@ -188,7 +191,7 @@ const DashboardScreen = () => {
          <UserLocationPinContainer style={{transform: [{translateX: -32}, {translateY: -32}]}}>
             <UserImagePulse style={{ transform: [{ scale: pulseAnim }] }} />
             <UserImageContainer>
-                <UserImage source={{ uri: 'https://i.imgur.com/n16shc2.png' }} />
+                <UserImage source={require('./assets/images/user_avatar.jpg')} />
             </UserImageContainer>
          </UserLocationPinContainer>
       </MapViewContainer>
