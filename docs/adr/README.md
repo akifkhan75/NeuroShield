@@ -24,7 +24,7 @@ Not for: library bumps, styling, or anything a code comment covers.
 3. Status is `Proposed` → `Accepted` → (later) `Superseded by ADR-NNNN`.
 4. **Never edit an accepted ADR's decision.** Supersede it with a new one — the
    record of what we used to think is the point.
-5. Link it from [`../ARCHITECTURE.md`](../ARCHITECTURE.md) if it is structural.
+5. Link it from [`../ARCHITECTURE.md`](../engineering/ARCHITECTURE.md) if it is structural.
 
 ## Index
 
@@ -37,6 +37,13 @@ Not for: library bumps, styling, or anything a code comment covers.
 | [0005](0005-ai-fallbacks-are-mandatory.md)            | Every AI call must have a local fallback          | Accepted                   |
 | [0006](0006-percentage-coordinates-to-be-replaced.md) | Percentage coordinates were a porting shortcut    | Accepted, to be superseded |
 | [0007](0007-name-the-product-lumo.md)                 | Name the product Lumo                             | Accepted                   |
+| [0008](0008-three-state-machines.md)                  | Three state machines, not one                     | Accepted                   |
+| [0009](0009-shared-safety-domain.md)                  | Pure shared safety-domain package                 | Accepted                   |
+| [0010](0010-hazard-reports-replace-danger-zones.md)   | Hazard reports replace danger zones               | Accepted                   |
+| [0011](0011-region-profile-adapter.md)                | Region profiles as the market adapter             | Accepted                   |
+| [0012](0012-delivery-ledger.md)                       | Verified Delivery Ledger                          | Accepted                   |
+| [0013](0013-ai-never-decides.md)                      | AI emits signals; engine decides                  | Accepted                   |
+| [0014](0014-modular-monolith.md)                      | Modular monolith + extraction criteria            | Accepted                   |
 
 ADRs 0001–0006 were written retrospectively on 2026-10-26 to capture decisions
 already visible in the code. Dates are the decision's approximate date from git

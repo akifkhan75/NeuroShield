@@ -2,7 +2,7 @@
 
 - **Engine:** PostgreSQL 15 (`postgres:15-alpine` via `docker-compose.yml`)
 - **ORM:** Prisma 5.22 (`prisma-client-js`)
-- **Schema:** [`apps/api/prisma/schema.prisma`](../apps/api/prisma/schema.prisma)
+- **Schema:** [`apps/api/prisma/schema.prisma`](../../apps/api/prisma/schema.prisma)
 - **Host port:** `5434` → container `5432` (chosen to avoid colliding with a local Postgres)
 - **Volume:** `postgres_data_v2`
 
@@ -104,7 +104,7 @@ with `prisma db push`. There is no migration history, so there is no reviewable
 schema diff and no safe production deploy.
 
 `archive/PRODUCTION_AUDIT.md` claims migrations are tracked. That claim is false
-([KI-5](KNOWN_ISSUES.md)).
+([KI-5](../audit/KNOWN_ISSUES.md)).
 
 ### Current (dev) workflow
 
@@ -167,7 +167,7 @@ created, with no pagination. The fix arrives with the geo model below.
 
 ## The schema change this project needs most
 
-Replacing the percentage positions with real coordinates ([KI-2](KNOWN_ISSUES.md))
+Replacing the percentage positions with real coordinates ([KI-2](../audit/KNOWN_ISSUES.md))
 unblocks maps, proximity alerts and nearby-help. Sketch:
 
 ```prisma
@@ -197,7 +197,7 @@ coordinates, then drop `top`/`left` and make the new columns required.
 
 Other models the roadmap needs: `SosIncident`, `Journey` + `JourneyPing`,
 `CheckIn`, `Device` (push tokens), `ZoneConfirmation`. See
-[ROADMAP.md](ROADMAP.md).
+[ROADMAP.md](../product/ROADMAP.md).
 
 ---
 
@@ -209,4 +209,4 @@ Other models the roadmap needs: `SosIncident`, `Journey` + `JourneyPing`,
   an incident record is evidence.
 - **Backups:** none configured. The Docker volume is the only copy of local data.
 - **PII:** `email`, `fullName`, `bloodType`, `allergies`, and contact phone numbers
-  are all stored in plaintext. See [SECURITY_AND_PRIVACY.md](SECURITY_AND_PRIVACY.md).
+  are all stored in plaintext. See [SECURITY_AND_PRIVACY.md](SECURITY.md).

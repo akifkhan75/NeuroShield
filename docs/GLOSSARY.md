@@ -11,7 +11,7 @@ identifier is given — use the same word in code, docs and UI copy.
 A user-reported hazard at a location: a `severity`, a `type`, a free-text
 `description`, and a timestamp. Community data: it outlives its reporter
 (`onDelete: SetNull`) and the feed is global. Today its position is a CSS
-percentage over a static image, not a coordinate ([KI-2](KNOWN_ISSUES.md)).
+percentage over a static image, not a coordinate ([KI-2](audit/KNOWN_ISSUES.md)).
 
 **Severity** — `DangerZoneSeverity`
 `low` | `medium` | `high`. Drives pin colour: blue `#3b82f6`, amber `#f59e0b`,
@@ -20,11 +20,11 @@ red `#ef4444`.
 **Zone Type** — `DangerZoneType`
 `Theft` | `Assault` | `Harassment` | `Poor Lighting` | `Suspicious Activity`.
 Beware: three spellings per value across Prisma, Postgres and the API — see
-[DATABASE.md](DATABASE.md).
+[DATABASE.md](engineering/DATABASE.md).
 
 **Trusted Contact** — `TrustedContact`
 Someone the user nominates to be alerted in an emergency: `name` + `phone`.
-Stored and editable today; **not yet used by any alert** ([KI-3](KNOWN_ISSUES.md)).
+Stored and editable today; **not yet used by any alert** ([KI-3](audit/KNOWN_ISSUES.md)).
 
 **SOS / Emergency**
 The user's explicit or automatic call for help. In the code, "Emergency" is the
@@ -42,11 +42,11 @@ user a plausible reason to leave. Real and working.
 **Follow Me** — `Journey` (planned)
 Sharing a live journey with a contact via a link, for the duration of a trip —
 not a persistent background share. Currently a mock link
-([KI-8](KNOWN_ISSUES.md)).
+([KI-8](audit/KNOWN_ISSUES.md)).
 
 **Check-In**
 A countdown the user sets; if they do not cancel it, SOS fires. Works in-process
-only, so it dies with the screen ([KI-8](KNOWN_ISSUES.md)).
+only, so it dies with the screen ([KI-8](audit/KNOWN_ISSUES.md)).
 
 **Safe Walk**
 Requesting a companion or responder to accompany a journey. Mock.
@@ -59,7 +59,7 @@ The UI name for continuous wake-phrase listening. `isListening` from
 `BRAND_VARIANTS` + `INTENT_WORDS` in `useVoiceActivation.ts`. A wake utterance is
 any recognizer alternative containing a brand variant (`lumo`, `loomo`, `luma`, …)
 **and** an intent word (`emergency`, `help`, `sos`). Variant matching exists because
-`Lumo` is coined and transcribes inconsistently — see [MOBILE.md](MOBILE.md).
+`Lumo` is coined and transcribes inconsistently — see [MOBILE.md](engineering/MOBILE.md).
 
 **Defense Mode**
 An overlay on the emergency screen showing AI self-defense tips and claiming a
@@ -67,7 +67,7 @@ loud alarm. The tips are real; the alarm is not.
 
 **Nearby Volunteers / Responder**
 The planned network of vetted people who can respond before emergency services.
-Currently a text label; a Phase 4 bet in [ROADMAP.md](ROADMAP.md).
+Currently a text label; a Phase 4 bet in [ROADMAP.md](product/ROADMAP.md).
 
 **Security Settings** — `SecuritySettings`
 The six booleans stored flat on `User`: `locationSharingEnabled`,
@@ -78,7 +78,7 @@ control the sensor hooks; the first three are stored and unread.
 **Stealth Mode** (planned)
 Operating without visible signs — disguised icon, discreet trigger, no alert UI —
 for users whose threat has access to the phone. See T1 in
-[SECURITY_AND_PRIVACY.md](SECURITY_AND_PRIVACY.md).
+[SECURITY_AND_PRIVACY.md](engineering/SECURITY.md).
 
 ---
 
@@ -126,11 +126,11 @@ and breaks the Android build.
 
 **Mock vs Real**
 The repo's most load-bearing distinction. "Real" means wired end to end; "mock"
-means the UI exists and does nothing. [FEATURES.md](FEATURES.md) is the source of
+means the UI exists and does nothing. [FEATURES.md](audit/FEATURES.md) is the source of
 truth, and describing a mock as shipped is the one unacceptable error here.
 
 **KI-n**
-A numbered entry in [KNOWN_ISSUES.md](KNOWN_ISSUES.md). Cite the number in
+A numbered entry in [KNOWN_ISSUES.md](audit/KNOWN_ISSUES.md). Cite the number in
 commits, PRs and docs.
 
 ---
@@ -152,4 +152,4 @@ Unrelated naming traps that remain:
 | `location` on a `DangerZone` | CSS percentages, **not** latitude/longitude                     |
 | `lumo.example`               | A placeholder link, not a real domain (`.example` is reserved)  |
 
-All four are tracked in [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
+All four are tracked in [KNOWN_ISSUES.md](audit/KNOWN_ISSUES.md).

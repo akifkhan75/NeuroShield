@@ -1,5 +1,13 @@
 # Feature Inventory — Real vs Mock
 
+> **Current reality.** For the _target_ feature set with phases and tiers see
+> [`../product/FEATURE_CATALOG.md`](../product/FEATURE_CATALOG.md); for requirements and
+> acceptance criteria see [`../product/PRD.md`](../product/PRD.md). IDs below cross-reference
+> the PRD so the three documents cannot drift.
+>
+> "Danger zone" is the **current** name; it is being renamed to **hazard report**
+> ([ADR-0010](../adr/0010-hazard-reports-replace-danger-zones.md)).
+
 **The most important table in this repo.** Half the UI is a convincing prototype.
 Nobody — human or agent — should plan work, demo the app, or describe it to a user
 without knowing which half.
@@ -16,29 +24,29 @@ Verified by reading the code on 2026-10-26.
 
 ## Summary
 
-| Feature                        | Status     | Where                                 |
-| ------------------------------ | ---------- | ------------------------------------- |
-| Email + password auth          | ✅ Real    | `AuthModule`, `AuthScreen`            |
-| Session persistence            | ⛔ Mock    | in-memory only                        |
-| Settings & profile             | ✅ Real    | `SettingsModule`, `settings/*`        |
-| Trusted contacts               | 🟨 Partial | stored; never used by any alert       |
-| Danger zone feed               | 🟨 Partial | real data, fake positions             |
-| Report a danger zone           | 🟨 Partial | server invents the location           |
-| Map                            | ⛔ Mock    | static JPEG, no map SDK               |
-| SOS / Emergency                | ⛔ Mock    | notifies nobody                       |
-| Shake to SOS                   | ✅ Real    | `useShakeDetector`                    |
-| Voice activation               | ✅ Real    | `useVoiceActivation` (dev build only) |
-| Crash detection                | ✅ Real    | `useAccidentDetector`                 |
-| Fake call                      | ✅ Real    | AI-generated script                   |
-| AI safety assistant            | 🟨 Partial | works; no conversation memory         |
-| Self-defense tips              | ✅ Real    | AI with fallback                      |
-| Check-in timer                 | 🟨 Partial | fires, but in-process only            |
-| Follow Me                      | ⛔ Mock    | hardcoded share link                  |
-| Community / Safe Walk          | ⛔ Mock    | local state                           |
-| Nearby volunteers              | ⛔ Mock    | a text label                          |
-| Audio/video evidence recording | ⛔ Mock    | `const isRecording = false`           |
-| Push notifications             | ❌ Absent  | not implemented at all                |
-| Offline support                | ❌ Absent  | —                                     |
+| Feature                        | ID          | Status     | Where                                 |
+| ------------------------------ | ----------- | ---------- | ------------------------------------- |
+| Email + password auth          | `—`         | ✅ Real    | `AuthModule`, `AuthScreen`            |
+| Session persistence            | `KI-4`      | ⛔ Mock    | in-memory only                        |
+| Settings & profile             | `PRO-6`     | ✅ Real    | `SettingsModule`, `settings/*`        |
+| Trusted contacts               | `RES-2/7`   | 🟨 Partial | stored; never used by any alert       |
+| Danger zone feed               | `PREV-2`    | 🟨 Partial | real data, fake positions             |
+| Report a danger zone           | `PREV-1`    | 🟨 Partial | server invents the location           |
+| Map                            | `PREV-2`    | ⛔ Mock    | static JPEG, no map SDK               |
+| SOS / Emergency                | `RES-1/2/3` | ⛔ Mock    | notifies nobody                       |
+| Shake to SOS                   | `DET-3`     | ✅ Real    | `useShakeDetector`                    |
+| Voice activation               | `DET-5`     | ✅ Real    | `useVoiceActivation` (dev build only) |
+| Crash detection                | `DET-4`     | ✅ Real    | `useAccidentDetector`                 |
+| Fake call                      | `RES-17`    | ✅ Real    | AI-generated script                   |
+| AI safety assistant            | `REC-4`     | 🟨 Partial | works; no conversation memory         |
+| Self-defense tips              | `REC-4`     | ✅ Real    | AI with fallback                      |
+| Check-in timer                 | `RES-13`    | 🟨 Partial | fires, but in-process only            |
+| Follow Me                      | `RES-11/12` | ⛔ Mock    | hardcoded share link                  |
+| Community / Safe Walk          | `RES-20`    | ⛔ Mock    | local state                           |
+| Nearby volunteers              | `RES-20`    | ⛔ Mock    | a text label                          |
+| Audio/video evidence recording | `PRO-1`     | ⛔ Mock    | `const isRecording = false`           |
+| Push notifications             | `RES-5`     | ❌ Absent  | not implemented at all                |
+| Offline support                | `RES-16`    | ❌ Absent  | —                                     |
 
 ---
 
@@ -182,5 +190,5 @@ built as UI first.
 So the highest-leverage sequence is narrow: give the system real coordinates, then
 make SOS actually reach someone. Those two unlock Follow Me, community help, and
 proximity alerts, which are the features that would actually differentiate this
-from Google's Personal Safety app. See [ROADMAP.md](ROADMAP.md) and
-[COMPETITIVE_ANALYSIS.md](COMPETITIVE_ANALYSIS.md).
+from Google's Personal Safety app. See [ROADMAP.md](../product/ROADMAP.md) and
+[COMPETITIVE_ANALYSIS.md](../gtm/COMPETITIVE_ANALYSIS.md).

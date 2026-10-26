@@ -68,7 +68,7 @@ Consequence by design: **the app is fully usable with no `API_KEY` set.**
 
 **This principle generalises, and should.** It is the model for Phase 2: SOS needs
 an SMS fallback when push fails, and a local siren that needs no network at all.
-See [ROADMAP.md](../ROADMAP.md).
+See [ROADMAP.md](../product/ROADMAP.md).
 
 ## Revisit when
 

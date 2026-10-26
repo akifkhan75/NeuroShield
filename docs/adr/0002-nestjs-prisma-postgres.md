@@ -56,9 +56,9 @@ Cross-cutting choices made with it:
 **Follow-on**
 
 - No `@nestjs/config`, so `process.env` is read directly and `JWT_SECRET` has an
-  insecure fallback ([KI-9](../KNOWN_ISSUES.md))
+  insecure fallback ([KI-9](../audit/KNOWN_ISSUES.md))
 - No global exception filter, request logging, or rate limiting
-- No migrations were ever generated ([KI-5](../KNOWN_ISSUES.md))
+- No migrations were ever generated ([KI-5](../audit/KNOWN_ISSUES.md))
 
 ## Revisit when
 

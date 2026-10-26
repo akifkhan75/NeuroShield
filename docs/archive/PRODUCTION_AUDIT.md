@@ -10,8 +10,8 @@
 >   open, traffic is HTTP, and `PUT /settings` is unvalidated.
 > - The "Conclusion" omits that SOS, Follow Me, Community and the map are mocks.
 >
-> Current state: [KNOWN_ISSUES.md](../KNOWN_ISSUES.md) and
-> [FEATURES.md](../FEATURES.md). Kept only as a record of what was believed at the
+> Current state: [KNOWN_ISSUES.md](../audit/KNOWN_ISSUES.md) and
+> [FEATURES.md](../audit/FEATURES.md). Kept only as a record of what was believed at the
 > time.
 
 # Production Readiness Audit

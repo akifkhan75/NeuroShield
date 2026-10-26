@@ -85,7 +85,7 @@ camera flash.
   disabled hands-free SOS, so it now matches a set of phonetic variants **and** an
   intent word, across _every_ recognizer alternative. The variant list is
   **unvalidated** and must be tuned against real device transcripts — Phase 4 of
-  [ROADMAP.md](../ROADMAP.md). A wake word that fails to fire is a safety defect
+  [ROADMAP.md](../product/ROADMAP.md). A wake word that fails to fire is a safety defect
 - `expo prebuild --clean` must regenerate the native projects for the new
   `com.lumo.app` id. **This is a new install, not an upgrade** — any build already
   on a device will not update

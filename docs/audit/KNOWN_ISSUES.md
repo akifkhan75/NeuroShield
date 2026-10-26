@@ -2,7 +2,7 @@
 
 **Verified against the code on 2026-10-26.** Every entry below was confirmed by
 reading the file named, not inferred. This file supersedes any conflicting claim
-in [`archive/PRODUCTION_AUDIT.md`](archive/PRODUCTION_AUDIT.md).
+in [`archive/PRODUCTION_AUDIT.md`](../archive/PRODUCTION_AUDIT.md).
 
 Agents: read this before planning a feature. It is the difference between
 building on something real and building on a prototype.
@@ -46,6 +46,9 @@ plus `expo-location` on the client. Depends on KI-2.
 ## 🔴 KI-2 — There is no real map, and no real coordinates
 
 **`apps/api/prisma/schema.prisma`, `danger-zones.service.ts`, `App.tsx`**
+
+> `DangerZone` is being renamed to `HazardReport`, and `severity` removed, because the
+> name encodes a neighbourhood-labelling bias — [ADR-0010](../adr/0010-hazard-reports-replace-danger-zones.md).
 
 `DangerZone` stores `top: String` and `left: String` — CSS percentages like
 `"45%"` — positioned absolutely over a static JPEG
@@ -252,12 +255,88 @@ bottom nav and every icon-only control.
 
 ---
 
-## Suggested order of work
+## New findings — 2026-10-27
 
-1. KI-1 (config) — unblocks every other test on a real device
-2. KI-5 (migrations) + KI-9 (secrets) — small, and they gate deployability
-3. KI-2 (geo model) — the foundation for KI-3
-4. KI-3 (real SOS) — the product's reason to exist
-5. KI-4 (session persistence)
-6. KI-7, KI-10, KI-6 — correctness and cleanup
-7. KI-11 (CI) — then it stays fixed
+Found while writing the specification suite. Full detail and severity rationale in
+[`TECHNICAL_AUDIT.md`](TECHNICAL_AUDIT.md).
+
+### 🔴 KI-16 — Unbounded alert and request loop
+
+**`apps/mobile/App.tsx:140-151`.** The effect depends on `userSettings`, and its body
+calls `handleSaveSettings`, which calls `setUserSettings(...)` — a new object identity,
+so the effect re-runs. `voiceError` never clears (`useVoiceActivation` sets it on error
+and only resets inside `startListening`, which is now disabled). Result: an **infinite
+`Alert.alert` queue and infinite `PUT /settings`**, triggered by any voice-recognition
+error — i.e. in the hands-free safety path.
+
+**Fix:** clear the error after handling it, or gate on a ref. Enable
+`react-hooks/exhaustive-deps` as an error so this class is lint-visible (KI-19).
+
+### 🟠 KI-17 — `pnpm typecheck` is a silent no-op
+
+`turbo run typecheck --dry=json` resolves **all 8 tasks to `<NONEXISTENT>`** — no
+package defines the script. It exits 0 having checked nothing, while the repo's own
+docs instructed using it as a quality gate.
+
+**Fix:** add `"typecheck": "tsc --noEmit"` to every package; make it a CI gate.
+
+### 🟠 KI-18 — `pnpm lint` fails, so it cannot gate CI
+
+27 pre-existing errors: unused imports plus 20 × `jest is not defined` in
+`jest-setup.js` (missing ESLint jest env). Must be green before CI can enforce it.
+
+### 🟡 KI-19 — `exhaustive-deps` not enforced
+
+Which is why KI-16 was invisible. Enable as an error on the mobile app.
+
+### 🟠 KI-20 — Sensor re-subscription churn
+
+`handleActivateEmergency` is keyed on `userSettings` and passed to all three hooks, so
+**every settings save** tears down the accelerometer listeners and destroys/restarts
+speech recognition — a continuous-listening feature restarted by unrelated state.
+
+### 🟡 KI-21 — Two independent accelerometer subscriptions
+
+`useShakeDetector` and `useAccidentDetector` each sample at 100 Hz and compute the same
+magnitude. Battery doubled for no benefit; merge into one subscription, two thresholds.
+
+### 🟠 KI-22 — No API hardening
+
+No `helmet`, no `compression`, no `@nestjs/throttler`. `/auth/login` is openly
+brute-forceable; `/ai/*` is an uncapped cost vector.
+
+### 🟠 KI-23 — No global exception filter
+
+Validation returns `message` as an **array**, plain exceptions as a **string**, so
+arrays reach the UI stringified. Stack traces may leak.
+
+### 🟡 KI-24 — No pagination, no indexes
+
+`GET /danger-zones` is an unbounded `findMany` over every row ever created, and the
+schema has **no explicit indexes at all** — not even on `reportedAt`, its sole sort key.
+
+### 🟡 KI-25 — No observability
+
+No request logging, no correlation ID, no real health endpoint (`GET /` returns a hello
+string), no dashboards. A delivery regression would be invisible.
+
+### 🟡 KI-26 — PII stored in plaintext
+
+Email, full name, blood type, allergies and contact phone numbers. No field-level
+encryption.
+
+---
+
+## Revised order of work
+
+Phase 0 of [`../product/ROADMAP.md`](../product/ROADMAP.md):
+
+1. **KI-16** — an active defect in the safety path
+2. **KI-17, KI-18, KI-19** — make the quality gates real before relying on them
+3. **KI-9, KI-5** — secrets and migrations; small, and they gate deployability
+4. **KI-1** — config, so the app runs anywhere
+5. **KI-22, KI-23** — API hardening
+6. **KI-7, KI-10, KI-6** — correctness and cleanup
+7. **KI-11** — CI, so it all stays fixed
+
+Then Phase 1: **KI-2** (geo model) → **KI-3** (real SOS) — the product's reason to exist.
