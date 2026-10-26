@@ -1,6 +1,107 @@
 # Architecture
 
-## 1. Overview
+> **Two architectures are described here.** §1–2 is the **target**, which the
+> specification suite assumes. §3 onward documents **what exists today**, which is a
+> two-app monorepo with no durable queue and no shared domain package.
+> Decisions: [ADR-0008](../adr/0008-three-state-machines.md) ·
+> [ADR-0009](../adr/0009-shared-safety-domain.md) ·
+> [ADR-0014](../adr/0014-modular-monolith.md).
+
+## 1. Target architecture
+
+```
+                  LUMO CLIENTS
+        mobile (Expo)          web (Next.js)
+              │                      │  tokenised journey page
+    ┌─────────┴─────────┐            │  (expiring, revocable)
+    │  Local Safety     │            │
+    │  Engine           │            │
+    │  · session state  │            │
+    │  · local timers   │            │
+    │  · offline queue  │            │
+    │  · emergency token│            │
+    └─────────┬─────────┘            │
+              │   imports            │
+      ┌───────▼────────────────┐     │
+      │ packages/safety-domain │◄────┤  same pure logic, both sides
+      │ 3 state machines       │     │
+      │ escalation rules       │     │
+      │ decision engine        │     │
+      │ idempotency keys       │     │
+      └───────┬────────────────┘     │
+              │  HTTPS + emergency token
+              ▼                      ▼
+        ┌──────────────────────────────────┐
+        │     NestJS modular monolith      │
+        │  safety-sessions · incidents ·   │
+        │  escalation · notifications ·    │
+        │  location · evidence · ai-safety │
+        └───┬───────────────┬──────────────┘
+            │               │
+      PostgreSQL      Durable queue
+            │               ├─ notification attempts + retries
+            │               ├─ evidence processing
+            │               └─ AI jobs (never on the SOS path)
+            │               │
+            │        ┌──────┴──────┬─────────────┐
+            │     Push          SMS/Voice   Object storage
+            │     (FCM/APNs)   (provider)   (encrypted)
+            │               │
+            └───────────────┴──► Delivery Ledger (per attempt, per channel)
+```
+
+### Two rules this diagram enforces
+
+1. **The SOS path never waits** on a queue, an AI job, or an evidence upload.
+2. **The local engine never claims remote delivery.** It owns timers and offline
+   state; the backend owns alerts, access control and the audit record.
+
+### Why `safety-domain` is shared
+
+The phone must keep timers when offline; the backend must coordinate alerts and own
+the audit trail. If each implemented escalation independently they would eventually
+**disagree about whether an escalation fired** — and in a safety product that
+disagreement is the bug that gets someone hurt. One pure, dependency-free,
+100%-branch-covered implementation, imported unchanged by both, makes divergence
+impossible (PLAT-7).
+
+## 2. Module growth — incremental, never empty shells
+
+This repo has already shipped three empty packages; that will not repeat.
+
+| Phase | Modules added                                                                                                                                                                                   |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | _(no new modules — fixes, specs, `danger-zones` → `hazard-reports`)_                                                                                                                            |
+| 1     | `trusted-contacts` `safety-circles` `safety-sessions` `journeys` `emergency-incidents` `escalation` `location` `notifications` `audit` · packages `safety-domain` `region-profiles` · app `web` |
+| 2     | `evidence`                                                                                                                                                                                      |
+| 3     | `ai-safety` `accident-detection`                                                                                                                                                                |
+| 4     | `safety-places` `community` `organizations`                                                                                                                                                     |
+| 5     | `wearables` `subscriptions` `admin`                                                                                                                                                             |
+
+`settings` folds into `users`. The empty `config`, `validation` and `eslint-config`
+packages are deleted in Phase 0.
+
+### Module boundaries that matter
+
+- **`ai-safety` may not send a notification.** It emits a `SafetySignal` the decision
+  engine evaluates ([ADR-0013](../adr/0013-ai-never-decides.md)).
+- **`notifications` may not decide** whether a missed check-in is an emergency. It
+  delivers what `escalation` asked for and reports the result.
+
+That separation is what makes the system testable and accountable.
+
+### Extraction criteria
+
+A module leaves the monolith only for: materially different scaling · a genuine
+fault-isolation requirement · an independent release cadence · a specialised runtime ·
+a clear ownership boundary. Likely first candidates: **notification delivery** and
+**media processing**. Auth and CRUD do not qualify.
+
+---
+
+## 3. Current architecture (as built)
+
+### Overview
 
 A three-tier system in a single Turborepo monorepo:
 
