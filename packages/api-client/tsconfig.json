@@ -1,5 +1,5 @@
 {
-  "extends": "@neuroshield/tsconfig/base.json",
+  "extends": "@lumo/tsconfig/base.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src"

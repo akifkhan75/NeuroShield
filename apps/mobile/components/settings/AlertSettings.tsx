@@ -118,7 +118,7 @@ const AlertSettingsScreen = () => {
                 />
                 <ToggleOption 
                     label="Voice Activation"
-                    description="Say 'Hey Guardian, emergency!' to trigger an alert."
+                    description="Say 'Hey Lumo, emergency!' to trigger an alert."
                     isEnabled={security.voiceActivationEnabled}
                     onToggle={() => handleToggle('voiceActivationEnabled')}
                 />

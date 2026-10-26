@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { GoogleGenAI } from '@google/genai';
-import { FakeCallScript } from '@neuroshield/types';
+import { FakeCallScript } from '@lumo/types';
 
 @Injectable()
 export class AiService {
@@ -94,7 +94,7 @@ export class AiService {
     try {
       const response = await this.aiClient.models.generateContent({
         model: "gemini-1.5-flash",
-        contents: `You are NeuroShield AI safety assistant. Provide concise, direct personal safety advice. User query: "${message}".`,
+        contents: `You are Lumo, an AI safety assistant. Provide concise, direct personal safety advice. User query: "${message}".`,
         config: {
           temperature: 0.7,
         },

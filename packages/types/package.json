@@ -1,5 +1,5 @@
 {
-  "name": "@neuroshield/types",
+  "name": "@lumo/types",
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
@@ -10,6 +10,6 @@
   },
   "devDependencies": {
     "typescript": "^5.0.4",
-    "@neuroshield/tsconfig": "workspace:*"
+    "@lumo/tsconfig": "workspace:*"
   }
 }

@@ -65,7 +65,7 @@ describe('useVoiceActivation', () => {
 
     // Trigger onSpeechResults with wake phrase
     act(() => {
-      mockVoice.onSpeechResults({ value: ['hey guardian emergency'] });
+      mockVoice.onSpeechResults({ value: ['hey lumo emergency'] });
     });
     expect(onActivate).toHaveBeenCalledTimes(1);
 

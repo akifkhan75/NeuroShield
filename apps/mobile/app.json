@@ -1,21 +1,21 @@
 {
   "expo": {
-    "name": "NeuroShield",
-    "slug": "neuroshield",
-    "scheme": "neuroshield",
+    "name": "Lumo",
+    "slug": "lumo",
+    "scheme": "lumo",
     "version": "0.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.neuroshield.app",
+      "bundleIdentifier": "com.lumo.app",
       "infoPlist": {
-        "NSMicrophoneUsageDescription": "Allow NeuroShield to access your microphone for hands-free emergency voice activation.",
-        "NSSpeechRecognitionUsageDescription": "Allow NeuroShield to recognize your voice to trigger emergency alerts hands-free."
+        "NSMicrophoneUsageDescription": "Allow Lumo to access your microphone for hands-free emergency voice activation.",
+        "NSSpeechRecognitionUsageDescription": "Allow Lumo to recognize your voice to trigger emergency alerts hands-free."
       }
     },
     "android": {
-      "package": "com.neuroshield.app",
+      "package": "com.lumo.app",
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
@@ -24,8 +24,8 @@
       [
         "@react-native-voice/voice",
         {
-          "microphonePermission": "Allow NeuroShield to access your microphone for hands-free emergency voice activation.",
-          "speechRecognitionPermission": "Allow NeuroShield to recognize your voice to trigger emergency alerts hands-free."
+          "microphonePermission": "Allow Lumo to access your microphone for hands-free emergency voice activation.",
+          "speechRecognitionPermission": "Allow Lumo to recognize your voice to trigger emergency alerts hands-free."
         }
       ]
     ]

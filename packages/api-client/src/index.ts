@@ -1,4 +1,4 @@
-import { UserSettings, DangerZone, DangerZoneType, DangerZoneSeverity, FakeCallScript, PersonalInfo } from '@neuroshield/types';
+import { UserSettings, DangerZone, DangerZoneType, DangerZoneSeverity, FakeCallScript, PersonalInfo } from '@lumo/types';
 
 export interface AuthResponse {
   user: PersonalInfo;

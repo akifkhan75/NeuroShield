@@ -71,18 +71,18 @@ const ContactCircleImage = styled(Image)`
     border-color: white;
 `;
 
-const InsafeLogoContainer = styled(View)`
+const LumoLogoContainer = styled(View)`
     position: absolute;
     align-items: center;
 `;
 
-const InsafeText = styled(Text)`
+const LumoText = styled(Text)`
     font-size: 24px;
     font-weight: bold;
     color: white;
 `;
 
-const InsafeSubtext = styled(Text)`
+const LumoSubtext = styled(Text)`
     font-size: 14px;
     color: rgba(255, 255, 255, 0.8);
 `;
@@ -216,10 +216,10 @@ const EmergencyScreen = () => {
       <MainContent>
         <ContactsRing>
             {contacts.map((c, i) => <ContactCircle key={c.name} {...c} angle={(i * 360/contacts.length)} />)}
-            <InsafeLogoContainer>
-                <InsafeText>InSafe</InsafeText>
-                <InsafeSubtext>Safety is Freedom</InsafeSubtext>
-            </InsafeLogoContainer>
+            <LumoLogoContainer>
+                <LumoText>Lumo</LumoText>
+                <LumoSubtext>Safety is Freedom</LumoSubtext>
+            </LumoLogoContainer>
         </ContactsRing>
       </MainContent>
       

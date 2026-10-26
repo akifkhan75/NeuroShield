@@ -1,7 +1,22 @@
 import { useEffect, useState } from 'react';
 import { NativeModules } from 'react-native';
 
-const WAKE_PHRASES = ["hey guardian emergency", "hey guardian help", "help me guardian"];
+// "Lumo" is a coined word, so speech-to-text transcribes it inconsistently
+// ("loomo", "luma", "lou mo"). Matching a single literal phrase would silently
+// disable hands-free SOS for most users, so we look for any brand variant AND an
+// intent word in the same utterance.
+//
+// UNVALIDATED: this list is a starting point, not a measurement. It must be tuned
+// against real on-device transcripts before launch — a wake word that fails to
+// fire is a safety defect, and one that over-fires causes alert fatigue.
+// High-collision homophones ("limo", "lumen") are deliberately excluded.
+const BRAND_VARIANTS = ['lumo', 'loomo', 'luma', 'lou mo', 'loom o'];
+const INTENT_WORDS = ['emergency', 'help', 'sos'];
+
+const isWakeUtterance = (transcript: string): boolean => {
+    const t = transcript.toLowerCase();
+    return BRAND_VARIANTS.some(brand => t.includes(brand)) && INTENT_WORDS.some(intent => t.includes(intent));
+};
 
 export const useVoiceActivation = (onActivate: () => void, enabled: boolean) => {
     const [isListening, setIsListening] = useState(false);
@@ -31,11 +46,10 @@ export const useVoiceActivation = (onActivate: () => void, enabled: boolean) => 
         if (!Voice) return;
 
         const onSpeechResults = (e: any) => {
-            if (e.value) {
-                const transcript = e.value[0].toLowerCase();
-                if (WAKE_PHRASES.some((phrase: string) => transcript.includes(phrase))) {
-                    onActivate();
-                }
+            // Check every alternative the recognizer returns, not just the top one:
+            // a coined wake word is often ranked second or third.
+            if (e.value?.some((alternative: string) => isWakeUtterance(alternative))) {
+                onActivate();
             }
         };
 
