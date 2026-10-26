@@ -4,9 +4,9 @@ Expo 58 / React Native 0.88 client. **Setup and troubleshooting live in the repo
 root docs**, not here — this app cannot be built standalone, it depends on
 `@lumo/types` and `@lumo/api-client` being built first.
 
-- **Get it running:** [`../../docs/DEVELOPMENT.md`](../../docs/DEVELOPMENT.md)
-- **Structure, navigation, state model, sensor hooks:** [`../../docs/MOBILE.md`](../../docs/MOBILE.md)
-- **What is real vs mock:** [`../../docs/FEATURES.md`](../../docs/FEATURES.md)
+- **Get it running:** [`../../docs/DEVELOPMENT.md`](../../docs/engineering/DEVELOPMENT.md)
+- **Structure, navigation, state model, sensor hooks:** [`../../docs/MOBILE.md`](../../docs/engineering/MOBILE.md)
+- **What is real vs mock:** [`../../docs/FEATURES.md`](../../docs/audit/FEATURES.md)
 - **Orientation for agents and new contributors:** [`../../CLAUDE.md`](../../CLAUDE.md)
 
 ```bash

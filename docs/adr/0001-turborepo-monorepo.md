@@ -60,7 +60,7 @@ packages/types  packages/api-client  packages/tsconfig
 **Follow-on**
 
 - `apps/mobile/types.ts` still duplicates `packages/types`, which defeats part of
-  the purpose ([KI-6](../KNOWN_ISSUES.md))
+  the purpose ([KI-6](../audit/KNOWN_ISSUES.md))
 
 ## Revisit when
 

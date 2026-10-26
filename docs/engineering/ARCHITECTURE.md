@@ -205,7 +205,7 @@ Passing functions as params is non-serializable and trips React Navigation's
 warnings, and it means deep links cannot reach these screens. It is accepted here
 for a small app. **Either preserve it or replace it wholesale** — a half-migration
 to Context with params still in place is the worst outcome. See ADR
-[0004](adr/0004-route-params-as-state-transport.md).
+[0004](../adr/0004-route-params-as-state-transport.md).
 
 ### Sensor hooks
 
@@ -228,7 +228,7 @@ Notes:
   setting back to `false`**.
 - The wake word is **"Hey Lumo"**. Because `Lumo` is a coined word, the matcher
   accepts phonetic variants across _all_ recognizer alternatives rather than one
-  literal phrase — see [MOBILE.md](MOBILE.md) and [ADR-0007](adr/0007-name-the-product-lumo.md).
+  literal phrase — see [MOBILE.md](MOBILE.md) and [ADR-0007](../adr/0007-name-the-product-lumo.md).
 
 ### Styling
 
@@ -258,13 +258,13 @@ Traced end to end, because it shows every layer and every quirk:
 12. navigation.goBack(), then a thank-you Alert after 300 ms
 ```
 
-Step 7 is [KI-2](KNOWN_ISSUES.md) — the report is not placed where the user is.
+Step 7 is [KI-2](../audit/KNOWN_ISSUES.md) — the report is not placed where the user is.
 
 ---
 
 ## 7. Known architectural gaps
 
-Summarized here, detailed in [KNOWN_ISSUES.md](KNOWN_ISSUES.md):
+Summarized here, detailed in [KNOWN_ISSUES.md](../audit/KNOWN_ISSUES.md):
 
 | Gap                                                | Impact                                          |
 | -------------------------------------------------- | ----------------------------------------------- |
@@ -277,4 +277,4 @@ Summarized here, detailed in [KNOWN_ISSUES.md](KNOWN_ISSUES.md):
 | No offline queue                                   | An emergency in a dead zone is lost             |
 
 The last two are the architectural work that the roadmap's Phase 2 depends on —
-see [ROADMAP.md](ROADMAP.md).
+see [ROADMAP.md](../product/ROADMAP.md).

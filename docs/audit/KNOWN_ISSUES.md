@@ -2,7 +2,7 @@
 
 **Verified against the code on 2026-10-26.** Every entry below was confirmed by
 reading the file named, not inferred. This file supersedes any conflicting claim
-in [`archive/PRODUCTION_AUDIT.md`](archive/PRODUCTION_AUDIT.md).
+in [`archive/PRODUCTION_AUDIT.md`](../archive/PRODUCTION_AUDIT.md).
 
 Agents: read this before planning a feature. It is the difference between
 building on something real and building on a prototype.

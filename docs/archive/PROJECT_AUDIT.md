@@ -11,7 +11,7 @@
 >   Expo dev-client workflow instead ([ADR-0003](../adr/0003-expo-dev-client-over-bare-rn.md)).
 >
 > Useful for understanding _why_ the code looks the way it does. For current state
-> see [ARCHITECTURE.md](../ARCHITECTURE.md) and [KNOWN_ISSUES.md](../KNOWN_ISSUES.md).
+> see [ARCHITECTURE.md](../engineering/ARCHITECTURE.md) and [KNOWN_ISSUES.md](../audit/KNOWN_ISSUES.md).
 
 # Project Audit
 

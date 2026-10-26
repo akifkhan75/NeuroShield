@@ -29,23 +29,23 @@ at this stage.
 
 ### What is not
 
-| Gap                                                                  | Risk                                                                                                                                                 | Ref                     |
-| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| `JWT_SECRET` falls back to `'super-secret-default-key'` in two files | A deploy that forgets the env var ships a publicly-known signing key: **every token forgeable, every account accessible**                            | [KI-9](KNOWN_ISSUES.md) |
-| `app.enableCors()` with no options                                   | Any origin may call the API with a bearer token                                                                                                      |                         |
-| HTTP, not HTTPS                                                      | The client hardcodes `http://192.168.100.81:3005`; tokens and locations in cleartext                                                                 | [KI-1](KNOWN_ISSUES.md) |
-| Token in a module-level variable                                     | Not in secure storage; no clear-on-logout                                                                                                            | [KI-4](KNOWN_ISSUES.md) |
-| No refresh token, no revocation                                      | A stolen token is valid for up to 7 days with no way to invalidate it                                                                                |                         |
-| No rate limiting anywhere                                            | `/auth/login` is openly brute-forceable; `/ai/*` is a billing-abuse vector                                                                           |                         |
-| `PUT /settings` takes `body: any`                                    | Bypasses the global pipe; unvalidated input reaches Prisma                                                                                           | [KI-7](KNOWN_ISSUES.md) |
-| `MinLength(6)` is the only password rule                             | No complexity check, no breach-list check                                                                                                            |                         |
-| No email verification                                                | Anyone can register any address                                                                                                                      |                         |
-| No password reset                                                    | Account recovery is impossible                                                                                                                       |                         |
-| Seed credentials prefilled in the UI                                 | `josim@example.com` / `password` in `AuthScreen.tsx`                                                                                                 |                         |
-| No audit log                                                         | No record of logins, settings changes, or SOS activations — and for a safety app that log _is_ evidence                                              |                         |
-| No exception filter                                                  | Stack traces may leak in error responses                                                                                                             |                         |
-| No request logging or correlation ids                                | An incident cannot be reconstructed                                                                                                                  |                         |
-| Prompt injection surface                                             | `safetyChat` interpolates the user message into the prompt. Low impact today (output is only displayed); it matters the moment the assistant can act | [API.md](API.md)        |
+| Gap                                                                  | Risk                                                                                                                                                 | Ref                              |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `JWT_SECRET` falls back to `'super-secret-default-key'` in two files | A deploy that forgets the env var ships a publicly-known signing key: **every token forgeable, every account accessible**                            | [KI-9](../audit/KNOWN_ISSUES.md) |
+| `app.enableCors()` with no options                                   | Any origin may call the API with a bearer token                                                                                                      |                                  |
+| HTTP, not HTTPS                                                      | The client hardcodes `http://192.168.100.81:3005`; tokens and locations in cleartext                                                                 | [KI-1](../audit/KNOWN_ISSUES.md) |
+| Token in a module-level variable                                     | Not in secure storage; no clear-on-logout                                                                                                            | [KI-4](../audit/KNOWN_ISSUES.md) |
+| No refresh token, no revocation                                      | A stolen token is valid for up to 7 days with no way to invalidate it                                                                                |                                  |
+| No rate limiting anywhere                                            | `/auth/login` is openly brute-forceable; `/ai/*` is a billing-abuse vector                                                                           |                                  |
+| `PUT /settings` takes `body: any`                                    | Bypasses the global pipe; unvalidated input reaches Prisma                                                                                           | [KI-7](../audit/KNOWN_ISSUES.md) |
+| `MinLength(6)` is the only password rule                             | No complexity check, no breach-list check                                                                                                            |                                  |
+| No email verification                                                | Anyone can register any address                                                                                                                      |                                  |
+| No password reset                                                    | Account recovery is impossible                                                                                                                       |                                  |
+| Seed credentials prefilled in the UI                                 | `josim@example.com` / `password` in `AuthScreen.tsx`                                                                                                 |                                  |
+| No audit log                                                         | No record of logins, settings changes, or SOS activations — and for a safety app that log _is_ evidence                                              |                                  |
+| No exception filter                                                  | Stack traces may leak in error responses                                                                                                             |                                  |
+| No request logging or correlation ids                                | An incident cannot be reconstructed                                                                                                                  |                                  |
+| Prompt injection surface                                             | `safetyChat` interpolates the user message into the prompt. Low impact today (output is only displayed); it matters the moment the assistant can act | [API.md](API.md)                 |
 
 ---
 
@@ -120,7 +120,7 @@ this principle — extend it to the whole response path.
 - [ ] Remove the prefilled credentials from `AuthScreen.tsx`
 - [ ] A global exception filter that never returns stack traces
 - [ ] Rotate every credential currently in `.env.example`
-- [ ] Prisma migrations instead of `db push` ([KI-5](KNOWN_ISSUES.md))
+- [ ] Prisma migrations instead of `db push` ([KI-5](../audit/KNOWN_ISSUES.md))
 
 ### Before the real SOS ships (blocking for that feature)
 
@@ -172,7 +172,7 @@ this principle — extend it to the whole response path.
 | Emergency services      | Claiming to contact 911/112 is regulated and varies by country | Get legal advice before any dispatch integration; never imply it works if it does not                                               |
 
 A safety app that over-promises is a legal problem as well as an ethical one.
-[FEATURES.md](FEATURES.md) exists so no one accidentally ships that claim.
+[FEATURES.md](../audit/FEATURES.md) exists so no one accidentally ships that claim.
 
 ---
 

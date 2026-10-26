@@ -1,8 +1,11 @@
 # CLAUDE.md — Agent Context for Lumo
 
 > **Read this first.** It is the fastest path to a correct change in this repo.
-> Deeper detail lives in [`docs/`](docs/README.md). If this file and a `docs/` file
-> disagree, the code wins — then fix both.
+> Deeper detail lives in [`docs/`](docs/README.md), now organised as
+> `product/` `specs/` `design/` `engineering/` `audit/` `gtm/` `adr/`.
+> **[`docs/product/PRD.md`](docs/product/PRD.md) is the root document** — scope,
+> requirement IDs and success metrics come from there.
+> If this file and a `docs/` file disagree, the code wins — then fix both.
 
 ---
 
@@ -14,14 +17,14 @@ a fake-call escape tool, journey sharing, a check-in timer, and an AI safety
 assistant.
 
 It is positioned as a **more capable alternative to Google's Personal Safety
-app** — see [`docs/COMPETITIVE_ANALYSIS.md`](docs/COMPETITIVE_ANALYSIS.md) for the
-feature-by-feature gap and [`docs/ROADMAP.md`](docs/ROADMAP.md) for the plan.
+app** — see [`docs/COMPETITIVE_ANALYSIS.md`](docs/gtm/COMPETITIVE_ANALYSIS.md) for the
+feature-by-feature gap and [`docs/ROADMAP.md`](docs/product/ROADMAP.md) for the plan.
 
 **Naming:** the product is **Lumo**, decided 2026-10-26 and applied throughout —
 packages are `@lumo/*`, the bundle id is `com.lumo.app`, and the wake word is
 **"Hey Lumo"**. The repo previously carried three names (NeuroShield / InSafe /
 "hey guardian"); if you find a straggler, fix it. Rationale and the executed
-checklist are in [`docs/BRANDING.md`](docs/BRANDING.md) and
+checklist are in [`docs/BRANDING.md`](docs/gtm/BRANDING.md) and
 [ADR-0007](docs/adr/0007-name-the-product-lumo.md).
 
 > The repo directory, the GitHub repo (`akifkhan75/Lumo`) and the git remote have
@@ -70,8 +73,14 @@ pnpm build                         # turbo: builds packages then apps
 pnpm test                          # turbo: vitest (api, api-client) + jest (mobile)
 pnpm --filter api test:e2e         # supertest e2e — needs a live database
 pnpm lint
-pnpm typecheck
+pnpm typecheck                     # ⚠️ CURRENTLY A NO-OP — see below
 ```
+
+> **`pnpm typecheck` checks nothing.** `turbo run typecheck --dry` resolves all 8
+> tasks to `<NONEXISTENT>`: no package defines the script, so it exits 0 having
+> verified nothing. Until Phase 0 fixes it, typecheck per package with
+> `pnpm --filter <pkg> exec tsc --noEmit`. Tracked as STD-1 in
+> [`docs/audit/TECHNICAL_AUDIT.md`](docs/audit/TECHNICAL_AUDIT.md).
 
 **Build order matters.** `packages/types` → `packages/api-client` → `apps/*`.
 Turbo handles it via `dependsOn: ["^build"]`. If the mobile app cannot resolve
@@ -95,28 +104,28 @@ source.
 
    `EXPO_PUBLIC_API_URL` exists in `.env.example` but **nothing reads it**. On a
    new network you must edit that constant. Fixing this properly is
-   [KI-1](docs/KNOWN_ISSUES.md).
+   [KI-1](docs/audit/KNOWN_ISSUES.md).
 
 3. **Danger-zone "coordinates" are CSS percentages, not geography.** The schema
    stores `top: String` and `left: String` (e.g. `"45%"`), positioned over a
    static JPEG (`apps/mobile/assets/images/map_bg.jpg`). There is no map SDK and
    no lat/lng anywhere. On create, the server _invents_ a position:
    `` `${48 + Math.random() * 4}%` ``. Any real geospatial work starts with
-   migrating this model — [KI-2](docs/KNOWN_ISSUES.md).
+   migrating this model — [KI-2](docs/audit/KNOWN_ISSUES.md).
 
 4. **The SOS screen does not contact anyone.** `EmergencyModal.tsx` is a
    convincing UI: a ring of hardcoded contacts (Police, EMS, Mom…), "Notifying
    Nearby Volunteers…", a defense-mode overlay. No call, no SMS, no push, no
    location upload. `shareLocationOnSos` / `sendSmsOnSos` are persisted to
    Postgres and **never read**. This is the single biggest gap between the demo
-   and a safety product — [KI-3](docs/KNOWN_ISSUES.md).
+   and a safety product — [KI-3](docs/audit/KNOWN_ISSUES.md).
 
 5. **Auth does not survive a restart.** The JWT lives in a module-level variable
    in `apiService.ts` and `isAuthenticated` is `useState` in `App.tsx`. No
    AsyncStorage, no SecureStore, no refresh token, and logout never clears the
-   token — [KI-4](docs/KNOWN_ISSUES.md).
+   token — [KI-4](docs/audit/KNOWN_ISSUES.md).
 
-Read [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) before planning any feature.
+Read [`docs/KNOWN_ISSUES.md`](docs/audit/KNOWN_ISSUES.md) before planning any feature.
 It separates _mock_ from _real_ and is kept prioritized.
 
 ---
@@ -163,7 +172,7 @@ It separates _mock_ from _real_ and is kept prioritized.
 - `packages/types/src/index.ts` is the source of truth.
 - `apps/mobile/types.ts` **duplicates all of it** and adds the navigation param
   lists. The two copies have already drifted once. Edit `packages/types` first,
-  then mirror — or collapse them ([KI-6](docs/KNOWN_ISSUES.md)).
+  then mirror — or collapse them ([KI-6](docs/audit/KNOWN_ISSUES.md)).
 
 **Commits** — Conventional Commits, as in the existing history:
 `feat(mobile): …`, `fix: …`, `chore: …`, `test: …`, `docs: …`.
@@ -192,7 +201,7 @@ Prisma 5.22, PostgreSQL 15 (Docker, **host port 5434**). Models: `User`,
 **`apps/api/prisma/migrations/` does not exist.** Despite what
 `docs/archive/PRODUCTION_AUDIT.md` claims, no migration has ever been generated;
 the schema is applied with `db push`. Before any production deploy, baseline the
-migration history — [KI-5](docs/KNOWN_ISSUES.md).
+migration history — [KI-5](docs/audit/KNOWN_ISSUES.md).
 
 **Enum gotcha:** `DangerZoneType` members are `Poor_Lighting` and
 `Suspicious_Activity` in Prisma but `@map` to `"Poor Lighting"` and
@@ -200,7 +209,7 @@ migration history — [KI-5](docs/KNOWN_ISSUES.md).
 string. `DangerZonesService` hand-maps both directions in `mapInputType` /
 `mapOutputType`. Touching this enum means touching all three places.
 
-Details: [`docs/DATABASE.md`](docs/DATABASE.md).
+Details: [`docs/DATABASE.md`](docs/engineering/DATABASE.md).
 
 ---
 
@@ -228,7 +237,7 @@ Native modules are mocked globally in `apps/mobile/jest-setup.js`
 (`expo-sensors`, `@react-native-voice/voice`, `@expo/vector-icons`). A new native
 dependency needs a mock there or the whole suite fails to boot.
 
-More: [`docs/TESTING.md`](docs/TESTING.md).
+More: [`docs/TESTING.md`](docs/engineering/TESTING.md).
 
 ---
 
@@ -250,17 +259,44 @@ More: [`docs/TESTING.md`](docs/TESTING.md).
 
 - [ ] `pnpm typecheck` and `pnpm lint` pass
 - [ ] Tests pass; new behavior has a test next to the code it tests
-- [ ] A new endpoint has a DTO, a guard, and a line in [`docs/API.md`](docs/API.md)
+- [ ] A new endpoint has a DTO, a guard, and a line in [`docs/API.md`](docs/engineering/API.md)
 - [ ] A schema change updates `schema.prisma`, the enum mappers (if touched),
-      `packages/types`, `apps/mobile/types.ts`, and [`docs/DATABASE.md`](docs/DATABASE.md)
+      `packages/types`, `apps/mobile/types.ts`, and [`docs/DATABASE.md`](docs/engineering/DATABASE.md)
 - [ ] Anything you discovered that contradicts these docs is written back into them
-- [ ] A gap you created or confirmed is added to [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md)
+- [ ] A gap you created or confirmed is added to [`docs/KNOWN_ISSUES.md`](docs/audit/KNOWN_ISSUES.md)
 
-## 12. Do not
+## 12. Project skills
+
+Seven skills in `.claude/skills/` encode the safety discipline. Invoke the relevant
+one rather than re-deriving the rules:
+
+| Skill                  | When                                                                                           |
+| ---------------------- | ---------------------------------------------------------------------------------------------- |
+| `emergency-review`     | Any diff touching SOS, triggers, notifications, escalation, location, evidence, or safety copy |
+| `safety-spec`          | Writing or changing anything in `docs/specs/` or the PRD                                       |
+| `delivery-ledger`      | Notification states, channel capabilities, incident rollup                                     |
+| `region-profile`       | Adding or validating a market                                                                  |
+| `safety-state-machine` | `packages/safety-domain`, sessions, incidents, idempotency                                     |
+| `a11y-safety`          | Any safety-critical UI                                                                         |
+| `lumo-docs`            | After editing docs — ID, link and format checks                                                |
+
+## 13. The four invariants
+
+These override convenience, and a change that breaks one is rejected:
+
+1. **No success state without a verified record** (PLAT-9). The SOS screen currently
+   violates this — it says "Emergency Calling…" and contacts nobody.
+2. **AI emits signals; a deterministic engine decides** ([ADR-0013](docs/adr/0013-ai-never-decides.md)).
+3. **Distinguish attempted / delivered / acknowledged** — never one tick
+   ([ADR-0012](docs/adr/0012-delivery-ledger.md)).
+4. **No configuration may track someone without a visible, revocable indicator on
+   their own device** (T2). Instant rejection.
+
+## 14. Do not
 
 - Commit secrets. `JWT_SECRET` and `API_KEY` fall back to insecure defaults — that
   is a bug, not a convenience.
 - Trust `docs/archive/*`. Those are historical snapshots with claims that were
-  never true; [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) supersedes them.
+  never true; [`docs/KNOWN_ISSUES.md`](docs/audit/KNOWN_ISSUES.md) supersedes them.
 - Describe a mock as a shipped feature. Half of the UI is a prototype, and a user
   trusting a fake SOS is the worst outcome this project can produce.

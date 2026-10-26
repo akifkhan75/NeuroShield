@@ -6,7 +6,7 @@
 
 > ⚠️ **Pre-release. Parts of the app are a working prototype, not a working
 > product.** The SOS screen does not yet contact anyone, and the map has no real
-> coordinates. Read [`docs/FEATURES.md`](docs/FEATURES.md) before demoing or
+> coordinates. Read [`docs/FEATURES.md`](docs/audit/FEATURES.md) before demoing or
 > describing this app to anyone. Do not rely on it in an actual emergency.
 
 ---
@@ -39,7 +39,7 @@ Log in with **`josim@example.com` / `password`** (prefilled).
    Edit it for your network — `10.0.2.2` for the Android emulator, `localhost` for
    the iOS simulator, your LAN IP for a device.
 
-Full setup and troubleshooting: [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md).
+Full setup and troubleshooting: [`docs/DEVELOPMENT.md`](docs/engineering/DEVELOPMENT.md).
 
 ---
 
@@ -60,7 +60,7 @@ Full setup and troubleshooting: [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md).
 | Community Safe Walk, nearby volunteers                           | ⛔ Mock                            |
 | Map                                                              | ⛔ Static image, no map SDK        |
 
-Full breakdown with file references: [`docs/FEATURES.md`](docs/FEATURES.md).
+Full breakdown with file references: [`docs/FEATURES.md`](docs/audit/FEATURES.md).
 
 ---
 
@@ -73,7 +73,7 @@ packages/        types · api-client · tsconfig          (shared, built before 
 tooling          Turborepo · pnpm 9 · Vitest · Jest (jest-expo) · oxlint + ESLint · Prettier
 ```
 
-Architecture, module layout and request flow: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+Architecture, module layout and request flow: [`docs/ARCHITECTURE.md`](docs/engineering/ARCHITECTURE.md).
 
 ---
 
@@ -83,12 +83,12 @@ Architecture, module layout and request flow: [`docs/ARCHITECTURE.md`](docs/ARCH
 
 - [`CLAUDE.md`](CLAUDE.md) — orientation for AI agents and new contributors; the
   commands, conventions and gotchas in one page
-- [`docs/FEATURES.md`](docs/FEATURES.md) — **real vs mock**
-- [`docs/KNOWN_ISSUES.md`](docs/KNOWN_ISSUES.md) — verified gaps, prioritized
-- [`docs/ROADMAP.md`](docs/ROADMAP.md) — what to build, in dependency order
-- [`docs/API.md`](docs/API.md) · [`docs/DATABASE.md`](docs/DATABASE.md) · [`docs/MOBILE.md`](docs/MOBILE.md) · [`docs/TESTING.md`](docs/TESTING.md)
-- [`docs/SECURITY_AND_PRIVACY.md`](docs/SECURITY_AND_PRIVACY.md) · [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
-- [`docs/COMPETITIVE_ANALYSIS.md`](docs/COMPETITIVE_ANALYSIS.md) · [`docs/BRANDING.md`](docs/BRANDING.md)
+- [`docs/FEATURES.md`](docs/audit/FEATURES.md) — **real vs mock**
+- [`docs/KNOWN_ISSUES.md`](docs/audit/KNOWN_ISSUES.md) — verified gaps, prioritized
+- [`docs/ROADMAP.md`](docs/product/ROADMAP.md) — what to build, in dependency order
+- [`docs/API.md`](docs/engineering/API.md) · [`docs/DATABASE.md`](docs/engineering/DATABASE.md) · [`docs/MOBILE.md`](docs/engineering/MOBILE.md) · [`docs/TESTING.md`](docs/engineering/TESTING.md)
+- [`docs/SECURITY_AND_PRIVACY.md`](docs/engineering/SECURITY.md) · [`docs/DEPLOYMENT.md`](docs/engineering/DEPLOYMENT.md)
+- [`docs/COMPETITIVE_ANALYSIS.md`](docs/gtm/COMPETITIVE_ANALYSIS.md) · [`docs/BRANDING.md`](docs/gtm/BRANDING.md)
 - [`docs/adr/`](docs/adr/README.md) — why the code is shaped this way
 
 ---
@@ -98,7 +98,7 @@ Architecture, module layout and request flow: [`docs/ARCHITECTURE.md`](docs/ARCH
 The product is **Lumo** — _your light in the dark_. Named 2026-10-26, replacing an
 earlier split across three names (NeuroShield in the repo, "InSafe" on the SOS
 screen, "hey guardian" as the wake word). Rationale, rejected alternatives and the
-executed checklist: [`docs/BRANDING.md`](docs/BRANDING.md) and
+executed checklist: [`docs/BRANDING.md`](docs/gtm/BRANDING.md) and
 [ADR-0007](docs/adr/0007-name-the-product-lumo.md).
 
 **Still outstanding:** trademark clearance (classes 9 and 42) and app-store search

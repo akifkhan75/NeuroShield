@@ -5,17 +5,17 @@ is the plan plus the blockers, so nobody discovers them on launch day.
 
 ---
 
-## Blockers (all of Phase 0 in [ROADMAP.md](ROADMAP.md))
+## Blockers (all of Phase 0 in [ROADMAP.md](../product/ROADMAP.md))
 
-| Blocker                                      | Why it blocks a deploy                                             | Ref                                                |
-| -------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------- |
-| No Prisma migrations                         | No safe way to evolve a production schema; `db push` can drop data | [KI-5](KNOWN_ISSUES.md)                            |
-| `JWT_SECRET` has an insecure fallback        | A missing env var silently ships a public signing key              | [KI-9](KNOWN_ISSUES.md)                            |
-| API base URL hardcoded to a LAN IP over HTTP | A built app points at someone's router                             | [KI-1](KNOWN_ISSUES.md)                            |
-| No `Dockerfile` for the API                  | `docker/` is empty; only Postgres is containerised                 | [KI-11](KNOWN_ISSUES.md)                           |
-| No CI                                        | Nothing verifies a build before it ships                           | [KI-11](KNOWN_ISSUES.md)                           |
-| CORS fully open                              | Any origin can use a bearer token                                  | [SECURITY_AND_PRIVACY.md](SECURITY_AND_PRIVACY.md) |
-| SOS is a mock                                | Shipping it as real is the one unacceptable outcome                | [KI-3](KNOWN_ISSUES.md)                            |
+| Blocker                                      | Why it blocks a deploy                                             | Ref                                    |
+| -------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------- |
+| No Prisma migrations                         | No safe way to evolve a production schema; `db push` can drop data | [KI-5](../audit/KNOWN_ISSUES.md)       |
+| `JWT_SECRET` has an insecure fallback        | A missing env var silently ships a public signing key              | [KI-9](../audit/KNOWN_ISSUES.md)       |
+| API base URL hardcoded to a LAN IP over HTTP | A built app points at someone's router                             | [KI-1](../audit/KNOWN_ISSUES.md)       |
+| No `Dockerfile` for the API                  | `docker/` is empty; only Postgres is containerised                 | [KI-11](../audit/KNOWN_ISSUES.md)      |
+| No CI                                        | Nothing verifies a build before it ships                           | [KI-11](../audit/KNOWN_ISSUES.md)      |
+| CORS fully open                              | Any origin can use a bearer token                                  | [SECURITY_AND_PRIVACY.md](SECURITY.md) |
+| SOS is a mock                                | Shipping it as real is the one unacceptable outcome                | [KI-3](../audit/KNOWN_ISSUES.md)       |
 
 ---
 
@@ -154,7 +154,7 @@ Two things that will bite on a remote builder:
 | `production`  | Store builds            | Production API; HTTPS enforced              |
 
 Set the API URL per profile via `EXPO_PUBLIC_API_URL` — which first requires
-fixing [KI-1](KNOWN_ISSUES.md), since nothing reads it today.
+fixing [KI-1](../audit/KNOWN_ISSUES.md), since nothing reads it today.
 
 ### Store submission
 
@@ -165,9 +165,9 @@ fixing [KI-1](KNOWN_ISSUES.md), since nothing reads it today.
   collection the app does not do, or omitting what it does, gets builds rejected.
 - **Safety claims are scrutinised.** Do not state the app contacts emergency
   services unless it does. See the credibility rules in
-  [COMPETITIVE_ANALYSIS.md](COMPETITIVE_ANALYSIS.md).
+  [COMPETITIVE_ANALYSIS.md](../gtm/COMPETITIVE_ANALYSIS.md).
 - **A changed `android.package` or iOS bundle id is a new app, not an update.** If
-  the rename in [BRANDING.md](BRANDING.md) happens, do it _before_ the first
+  the rename in [BRANDING.md](../gtm/BRANDING.md) happens, do it _before_ the first
   store submission.
 
 ---
@@ -207,4 +207,4 @@ web deploy.
 | DB     | Connection count, slow queries, disk                         | —                                                      |
 
 Privacy constraint: **no coordinates and no contact details in logs or analytics
-events.** Aggregate counts only. See [SECURITY_AND_PRIVACY.md](SECURITY_AND_PRIVACY.md).
+events.** Aggregate counts only. See [SECURITY_AND_PRIVACY.md](SECURITY.md).

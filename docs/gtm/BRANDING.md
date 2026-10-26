@@ -1,7 +1,7 @@
 # Naming & Branding
 
 > **Decided 2026-10-26: the product is Lumo.** Rationale, rejected alternatives and
-> consequences are in [ADR-0007](adr/0007-name-the-product-lumo.md). The rename has
+> consequences are in [ADR-0007](../adr/0007-name-the-product-lumo.md). The rename has
 > been applied across the codebase; this document records what was done, what is
 > deliberately left alone, and what is still outstanding.
 
@@ -45,7 +45,7 @@ Applied and verified — `pnpm build` and all 5 test tasks pass, 44 mobile tests
 | SOS screen         | `InsafeText`/`InsafeSubtext`/`InsafeLogoContainer` → `Lumo*`; rendered text `InSafe` → `Lumo`                                     |
 | Onboarding         | `AuthScreen.tsx` headline → "with Lumo"                                                                                           |
 | Settings copy      | "Say 'Hey Lumo, emergency!' to trigger an alert."                                                                                 |
-| Follow Me          | `insafe.example` → `lumo.example` (still a placeholder — [KI-8](KNOWN_ISSUES.md))                                                 |
+| Follow Me          | `insafe.example` → `lumo.example` (still a placeholder — [KI-8](../audit/KNOWN_ISSUES.md))                                        |
 | AI identity        | System prompt → "You are Lumo, an AI safety assistant."                                                                           |
 | Wake word          | `WAKE_PHRASES` replaced with variant matching — see below                                                                         |
 | Tests              | e2e suite name; voice-activation test transcript                                                                                  |
@@ -74,7 +74,7 @@ SOS.
 > **The variant list is unvalidated.** It is a starting point, not a measurement,
 > and must be tuned against real on-device transcripts before launch. A wake word
 > that fails to fire is a safety defect; one that over-fires causes alert fatigue.
-> Tracked in Phase 4 of [ROADMAP.md](ROADMAP.md).
+> Tracked in Phase 4 of [ROADMAP.md](../product/ROADMAP.md).
 
 ### Deliberately left alone
 
