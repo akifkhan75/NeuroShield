@@ -73,7 +73,7 @@ export const API_BASE_URL = `http://${LAN_IP}:3005`;
 ```
 
 `EXPO_PUBLIC_API_URL` is in `.env.example` but **nothing reads it**. You must edit
-the source for your network. ([KI-1](KNOWN_ISSUES.md))
+the source for your network. ([KI-1](../audit/KNOWN_ISSUES.md))
 
 What to use for `LAN_IP`:
 
@@ -95,13 +95,13 @@ Copy `.env.example`. Nothing here is loaded automatically by the API — there i
 `@nestjs/config` module, so values are read straight from `process.env` and the
 file must be in `apps/api/.env` (or exported in your shell).
 
-| Variable              | Used by                             | Default if unset             | Notes                                                 |
-| --------------------- | ----------------------------------- | ---------------------------- | ----------------------------------------------------- |
-| `DATABASE_URL`        | Prisma                              | —                            | Required; port **5434**                               |
-| `API_PORT`            | `main.ts`                           | **3001**                     | Set it to `3005`                                      |
-| `JWT_SECRET`          | `auth.module.ts`, `jwt.strategy.ts` | `'super-secret-default-key'` | **Insecure fallback** — [KI-9](KNOWN_ISSUES.md)       |
-| `API_KEY`             | `ai.service.ts`                     | none → fallback responses    | Google Gemini key. Optional: the app works without it |
-| `EXPO_PUBLIC_API_URL` | **nothing**                         | —                            | Declared but unread — [KI-1](KNOWN_ISSUES.md)         |
+| Variable              | Used by                             | Default if unset             | Notes                                                    |
+| --------------------- | ----------------------------------- | ---------------------------- | -------------------------------------------------------- |
+| `DATABASE_URL`        | Prisma                              | —                            | Required; port **5434**                                  |
+| `API_PORT`            | `main.ts`                           | **3001**                     | Set it to `3005`                                         |
+| `JWT_SECRET`          | `auth.module.ts`, `jwt.strategy.ts` | `'super-secret-default-key'` | **Insecure fallback** — [KI-9](../audit/KNOWN_ISSUES.md) |
+| `API_KEY`             | `ai.service.ts`                     | none → fallback responses    | Google Gemini key. Optional: the app works without it    |
+| `EXPO_PUBLIC_API_URL` | **nothing**                         | —                            | Declared but unread — [KI-1](../audit/KNOWN_ISSUES.md)   |
 
 ---
 
@@ -213,7 +213,7 @@ SMS, contacts, or notifications — all needed for the planned real SOS.
 | `ERR_PNPM_INVALID_PATCH` / `hunk header integrity check failed` | The patch file's `@@` line counts disagree with its body | Count the hunk's `-`/context vs `+`/context lines and correct the header; a stale `node_modules` hides this until a reinstall forces re-application |
 | Jest fails to boot on a native import                           | Missing mock                                             | Add it to `apps/mobile/jest-setup.js`                                                                                                               |
 | A body field is `undefined` in a controller                     | `whitelist: true` stripped it                            | Add the `class-validator` decorator to the DTO                                                                                                      |
-| Logged out after reloading the app                              | Expected                                                 | [KI-4](KNOWN_ISSUES.md)                                                                                                                             |
+| Logged out after reloading the app                              | Expected                                                 | [KI-4](../audit/KNOWN_ISSUES.md)                                                                                                                    |
 
 ### Resetting the database
 

@@ -13,7 +13,7 @@ NestJS 12 REST API. **Verified against `apps/api/src/` on 2026-10-26.**
   stripped** from the body.
 
 The canonical client for all of this is
-[`packages/api-client`](../packages/api-client/src/index.ts) — prefer adding a
+[`packages/api-client`](../../packages/api-client/src/index.ts) — prefer adding a
 method there over calling `fetch` anywhere else.
 
 ---
@@ -80,7 +80,7 @@ Errors: `400` `User with this email already exists`.
 
 > No email verification, no password reset, no refresh token, no rate limiting,
 > and `MinLength(6)` is the only password rule. See
-> [SECURITY_AND_PRIVACY.md](SECURITY_AND_PRIVACY.md).
+> [SECURITY_AND_PRIVACY.md](SECURITY.md).
 
 ---
 
@@ -137,7 +137,7 @@ are skipped by Prisma). Returns the full re-read settings object.
 **Two behaviors to know before you call this:**
 
 1. The handler is typed `@Body() body: any`, so it **opts out of the global
-   ValidationPipe**. Garbage in this body reaches Prisma. ([KI-7](KNOWN_ISSUES.md))
+   ValidationPipe**. Garbage in this body reaches Prisma. ([KI-7](../audit/KNOWN_ISSUES.md))
 2. If `trustedContacts` is present, the service **deletes every contact and
    recreates the array**, outside a transaction. Contact `id`s change on every
    save, and a crash between the two statements leaves the user with **no
@@ -168,7 +168,7 @@ distance filter, no `userId` in the response.
 ```
 
 `location.top` / `.left` are **CSS percentages over a static map image**, not
-coordinates. ([KI-2](KNOWN_ISSUES.md))
+coordinates. ([KI-2](../audit/KNOWN_ISSUES.md))
 
 ### `POST /api/v1/danger-zones` → `201 Created`
 
@@ -238,7 +238,7 @@ Response: `{ "response": "…" }`
 
 > `history` is accepted by both the client and the service and then **never used**
 > — the prompt is built from `message` only, so the assistant has no memory within
-> a conversation. ([KI-14](KNOWN_ISSUES.md))
+> a conversation. ([KI-14](../audit/KNOWN_ISSUES.md))
 
 The user message is interpolated directly into the prompt string, which is a
 prompt-injection surface; it is low-impact today (the output is only displayed)
@@ -276,14 +276,14 @@ There is no global exception filter, no request logging, and no correlation id.
 
 ## Endpoints the product needs but does not have
 
-Tracked in [ROADMAP.md](ROADMAP.md); listed here so nobody looks for them twice.
+Tracked in [ROADMAP.md](../product/ROADMAP.md); listed here so nobody looks for them twice.
 
-| Planned                                                       | Purpose                                                                          |
-| ------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `POST /api/v1/sos`                                            | Record an incident, fan out to contacts — the real SOS ([KI-3](KNOWN_ISSUES.md)) |
-| `POST /api/v1/journeys`, `PATCH /…/location`, `GET /j/:token` | Real Follow Me with a public tracking link                                       |
-| `POST /api/v1/check-ins`                                      | Server-side timer so a dead phone still escalates                                |
-| `GET /api/v1/danger-zones/nearby?lat&lng&radius`              | Proximity query (needs the geo model)                                            |
-| `POST /api/v1/devices`                                        | Push token registration                                                          |
-| `POST /api/v1/auth/refresh`, `/forgot-password`               | Session and account recovery                                                     |
-| `GET /api/v1/me`                                              | Identity without the whole settings payload                                      |
+| Planned                                                       | Purpose                                                                                   |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `POST /api/v1/sos`                                            | Record an incident, fan out to contacts — the real SOS ([KI-3](../audit/KNOWN_ISSUES.md)) |
+| `POST /api/v1/journeys`, `PATCH /…/location`, `GET /j/:token` | Real Follow Me with a public tracking link                                                |
+| `POST /api/v1/check-ins`                                      | Server-side timer so a dead phone still escalates                                         |
+| `GET /api/v1/danger-zones/nearby?lat&lng&radius`              | Proximity query (needs the geo model)                                                     |
+| `POST /api/v1/devices`                                        | Push token registration                                                                   |
+| `POST /api/v1/auth/refresh`, `/forgot-password`               | Session and account recovery                                                              |
+| `GET /api/v1/me`                                              | Identity without the whole settings payload                                               |

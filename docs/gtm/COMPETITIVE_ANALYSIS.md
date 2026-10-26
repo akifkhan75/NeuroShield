@@ -10,7 +10,7 @@ where a small independent app can actually win.
 > carrier. Re-check every competitor row against the current product and terms
 > before using any of it in marketing, a pitch, or a store listing. The
 > Lumo column is verified against this codebase
-> ([FEATURES.md](FEATURES.md)).
+> ([FEATURES.md](../audit/FEATURES.md)).
 
 ---
 
@@ -101,7 +101,7 @@ Every mainstream safety app assumes the threat is a stranger. Often it is someon
 with access to the phone. A disguised icon, a discreet trigger, no visible alert
 state, and a panic wipe of local traces — this is a design philosophy a big
 vendor is unlikely to adopt, and it serves the users who need the app most. See
-T1 in [SECURITY_AND_PRIVACY.md](SECURITY_AND_PRIVACY.md).
+T1 in [SECURITY_AND_PRIVACY.md](../engineering/SECURITY.md).
 
 ### 5. Privacy as the product
 
@@ -158,7 +158,7 @@ Three pillars to build the roadmap and the store listing around:
 A safety app that over-promises is worse than no safety app, and it is also a
 legal exposure.
 
-1. Never claim a feature that is a mock. [FEATURES.md](FEATURES.md) is the source
+1. Never claim a feature that is a mock. [FEATURES.md](../audit/FEATURES.md) is the source
    of truth.
 2. The SOS screen must not imply contact has been made until it has, and it must
    show real delivery state (sending / delivered / failed per contact).

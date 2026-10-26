@@ -8,9 +8,9 @@ short version of everything here.
 ## Before you write code
 
 1. Read [`../CLAUDE.md`](../CLAUDE.md) — the five facts in §4 will save you an hour.
-2. Check [FEATURES.md](FEATURES.md). **Confirm whether what you are building on is
+2. Check [FEATURES.md](audit/FEATURES.md). **Confirm whether what you are building on is
    real or a mock.** Half this UI is a prototype.
-3. Check [KNOWN_ISSUES.md](KNOWN_ISSUES.md) for a `KI-n` that already covers it.
+3. Check [KNOWN_ISSUES.md](audit/KNOWN_ISSUES.md) for a `KI-n` that already covers it.
 4. If the change is architectural, write an [ADR](adr/README.md) first.
 
 ---
@@ -58,7 +58,7 @@ obvious.
 ## Definition of done
 
 - [ ] `pnpm lint`, `pnpm typecheck`, `pnpm test` pass
-- [ ] New behavior has a test next to the code it tests ([TESTING.md](TESTING.md))
+- [ ] New behavior has a test next to the code it tests ([TESTING.md](engineering/TESTING.md))
 - [ ] No new `console.log` in a hot path; no commented-out code
 - [ ] No secrets, no hardcoded IPs, no hardcoded hostnames
 - [ ] The docs below are updated
@@ -66,15 +66,15 @@ obvious.
 
 ### Docs that must move with the code
 
-| You changed                | Update                                                               |
-| -------------------------- | -------------------------------------------------------------------- |
-| An endpoint                | [API.md](API.md), `ApiClient`, both type copies                      |
-| `schema.prisma`            | [DATABASE.md](DATABASE.md), a migration, the enum mappers if touched |
-| A screen or navigation     | [MOBILE.md](MOBILE.md) and the param list in `types.ts`              |
-| Anything mock → real       | [FEATURES.md](FEATURES.md) ← **the most important one**              |
-| A setup step               | [DEVELOPMENT.md](DEVELOPMENT.md)                                     |
-| An architectural decision  | A new [ADR](adr/README.md)                                           |
-| A gap you found or created | [KNOWN_ISSUES.md](KNOWN_ISSUES.md)                                   |
+| You changed                | Update                                                                           |
+| -------------------------- | -------------------------------------------------------------------------------- |
+| An endpoint                | [API.md](engineering/API.md), `ApiClient`, both type copies                      |
+| `schema.prisma`            | [DATABASE.md](engineering/DATABASE.md), a migration, the enum mappers if touched |
+| A screen or navigation     | [MOBILE.md](engineering/MOBILE.md) and the param list in `types.ts`              |
+| Anything mock → real       | [FEATURES.md](audit/FEATURES.md) ← **the most important one**                    |
+| A setup step               | [DEVELOPMENT.md](engineering/DEVELOPMENT.md)                                     |
+| An architectural decision  | A new [ADR](adr/README.md)                                                       |
+| A gap you found or created | [KNOWN_ISSUES.md](audit/KNOWN_ISSUES.md)                                         |
 
 Stale docs are how this repo ended up with an audit claiming migrations existed
 when they never did. Don't add to it.
@@ -95,7 +95,7 @@ network via `apiService` only; sensor logic in a `hooks/` hook with the
 `accessibilityLabel`/`accessibilityRole` to anything tappable.
 
 **Types** — edit `packages/types/src/index.ts` first, then mirror
-`apps/mobile/types.ts` until [KI-6](KNOWN_ISSUES.md) is fixed.
+`apps/mobile/types.ts` until [KI-6](audit/KNOWN_ISSUES.md) is fixed.
 
 ---
 
@@ -113,7 +113,7 @@ These are not style preferences. They are why the product exists.
    contacts". Show per-contact delivery, including failures.
 4. **Treat location and contacts as dangerous data.** Minimum collection, visible
    and revocable sharing, no coordinates in logs. Read
-   [SECURITY_AND_PRIVACY.md](SECURITY_AND_PRIVACY.md) — especially threat T1,
+   [SECURITY_AND_PRIVACY.md](engineering/SECURITY.md) — especially threat T1,
    where the attacker holds the phone.
 
 ---
@@ -129,4 +129,4 @@ These are not style preferences. They are why the product exists.
 - **Write discoveries back.** If you spend twenty minutes learning something
   non-obvious, add it to the right doc so the next agent spends zero.
 - **Don't introduce a fourth name.** Three is already the problem — see
-  [BRANDING.md](BRANDING.md).
+  [BRANDING.md](gtm/BRANDING.md).

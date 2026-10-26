@@ -1,6 +1,6 @@
 # ADR-0006: Percentage coordinates were a porting shortcut, not a design
 
-- **Status:** Accepted, **to be superseded** — see [KI-2](../KNOWN_ISSUES.md)
+- **Status:** Accepted, **to be superseded** — see [KI-2](../audit/KNOWN_ISSUES.md)
 - **Date:** 2026-10-04 (decided), 2026-10-26 (recorded)
 - **Deciders:** Project owner
 
@@ -46,7 +46,7 @@ const left = `${48 + Math.random() * 4}%`;
 - **Reports have no real location.** Every submission lands in a random spot near
   the centre of a JPEG. The community map is decorative
 - No proximity alerts, no safe routing, no nearby-help, no distance filtering —
-  the entire prevention half of the product ([COMPETITIVE_ANALYSIS.md](../COMPETITIVE_ANALYSIS.md))
+  the entire prevention half of the product ([COMPETITIVE_ANALYSIS.md](../gtm/COMPETITIVE_ANALYSIS.md))
 - `GET /danger-zones` cannot be filtered or paginated meaningfully, so it returns
   every row ever written
 - Coordinates as `String` cannot be indexed or compared
@@ -62,8 +62,8 @@ a display hack into **fabricated data**. That part was a mistake, not a trade-of
 Add `latitude Float`, `longitude Float`, `geohash String`, `accuracyM Float?`,
 `expiresAt`, `confirmCount` (+ indexes); accept coordinates from the client; render
 with `react-native-maps`; query by bounding box; **delete** `top`/`left` and the
-`Math.random()` block. Migration sketch in [DATABASE.md](../DATABASE.md); this is
-Phase 1 of [ROADMAP.md](../ROADMAP.md).
+`Math.random()` block. Migration sketch in [DATABASE.md](../engineering/DATABASE.md); this is
+Phase 1 of [ROADMAP.md](../product/ROADMAP.md).
 
 Write the superseding ADR when that lands.
 

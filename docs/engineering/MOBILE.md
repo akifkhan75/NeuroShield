@@ -74,7 +74,7 @@ NavigationContainer
 Auth is a **conditional branch of the navigator**, so `handleLogout()` unmounts
 every authenticated screen — no manual reset needed, and no authenticated state
 can survive a logout in memory except the token itself
-([KI-4](KNOWN_ISSUES.md)).
+([KI-4](../audit/KNOWN_ISSUES.md)).
 
 Param lists are typed in `types.ts` as `RootStackParamList` and
 `SettingsStackParamList`. Keep them current — they are the only compile-time check
@@ -119,7 +119,7 @@ remount. It is acceptable at this size.
 
 If you outgrow it, replace it **completely** (one `SettingsContext` + a
 `useDangerZones` hook, params reduced to ids). A half-migration with both patterns
-live is worse than either. See [ADR-0004](adr/0004-route-params-as-state-transport.md).
+live is worse than either. See [ADR-0004](../adr/0004-route-params-as-state-transport.md).
 
 ---
 
@@ -138,7 +138,7 @@ Two irregularities to be aware of:
 - `login` and `signup` use **raw `fetch`** instead of `apiClient.login` /
   `.signup`, duplicating that logic and swallowing the server's error message
   (`throw new Error('HTTP error')`). There is also a leftover
-  `console.log('resp', response)`. ([KI-10](KNOWN_ISSUES.md))
+  `console.log('resp', response)`. ([KI-10](../audit/KNOWN_ISSUES.md))
 - `setAuthToken` writes both `currentToken` and `apiClient.setToken`, but
   `handleLogout` in `App.tsx` never calls it — the token outlives the session.
 
@@ -193,7 +193,7 @@ High-collision homophones (`limo`, `lumen`) are deliberately excluded.
 > The variant list is **unvalidated** — a starting point, not a measurement. It must
 > be tuned against real on-device transcripts before launch: a wake word that fails
 > to fire is a safety defect, and one that over-fires causes alert fatigue. Tracked
-> in Phase 4 of [ROADMAP.md](ROADMAP.md).
+> in Phase 4 of [ROADMAP.md](../product/ROADMAP.md).
 
 ---
 
@@ -229,9 +229,9 @@ Icons: add to `constants.tsx` as `Icon<Name>` wrappers. Nothing else should impo
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `AuthScreen`            | Onboarding → login/signup tabs. **Prefills `josim@example.com` / `password`.** Calls `apiService.login`/`signup`, then `onLoginSuccess()`.                                                                                     |
 | `DashboardScreen`       | Static JPEG "map" + absolutely positioned `DangerZonePin`s, header with the user's name (location text is the hardcoded string _"San diago, 8453 Street, Italy"_), bottom nav, SOS, AI button. Pins pulse via `Animated.loop`. |
-| `EmergencyModal`        | **UI only — contacts nobody.** Hardcoded contact ring, "Notifying Nearby Volunteers…", a defense-mode overlay that _does_ fetch real AI tips. `isRecording` is a `const false`. ([KI-3](KNOWN_ISSUES.md))                      |
+| `EmergencyModal`        | **UI only — contacts nobody.** Hardcoded contact ring, "Notifying Nearby Volunteers…", a defense-mode overlay that _does_ fetch real AI tips. `isRecording` is a `const false`. ([KI-3](../audit/KNOWN_ISSUES.md))             |
 | `FakeCallScreen`        | Real: fetches a script from the AI endpoint and plays it as an incoming call.                                                                                                                                                  |
-| `SafetyAssistantModal`  | Real: chats against `POST /ai/safety-chat` (history is dropped server-side, [KI-14](KNOWN_ISSUES.md)).                                                                                                                         |
+| `SafetyAssistantModal`  | Real: chats against `POST /ai/safety-chat` (history is dropped server-side, [KI-14](../audit/KNOWN_ISSUES.md)).                                                                                                                |
 | `ReportDangerZoneModal` | Real: posts type/severity/description. The server invents the location.                                                                                                                                                        |
 | `CheckInModal`          | Timer works and calls `onEmergency()` at zero — but in-process only, so backgrounding or killing the app cancels the escalation.                                                                                               |
 | `FollowMeModal`         | Mock: `shareLink` is a hardcoded constant; nothing is shared.                                                                                                                                                                  |
@@ -251,5 +251,5 @@ Icons: add to `constants.tsx` as `Icon<Name>` wrappers. Nothing else should impo
    cleanup return — never inline in a component.
 5. New icons go in `constants.tsx`.
 6. Add `accessibilityLabel` / `accessibilityRole` to anything tappable. Nothing in
-   the app has them today ([KI-15](KNOWN_ISSUES.md)) and this app will be used
+   the app has them today ([KI-15](../audit/KNOWN_ISSUES.md)) and this app will be used
    under stress, one-handed, in the dark.

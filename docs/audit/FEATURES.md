@@ -182,5 +182,5 @@ built as UI first.
 So the highest-leverage sequence is narrow: give the system real coordinates, then
 make SOS actually reach someone. Those two unlock Follow Me, community help, and
 proximity alerts, which are the features that would actually differentiate this
-from Google's Personal Safety app. See [ROADMAP.md](ROADMAP.md) and
-[COMPETITIVE_ANALYSIS.md](COMPETITIVE_ANALYSIS.md).
+from Google's Personal Safety app. See [ROADMAP.md](../product/ROADMAP.md) and
+[COMPETITIVE_ANALYSIS.md](../gtm/COMPETITIVE_ANALYSIS.md).

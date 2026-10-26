@@ -146,12 +146,12 @@ coverage number. Treat the mobile figure as partial.
 
 | Missing                                          | Impact                                                                                                                                                                |
 | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **No CI**                                        | Nothing runs on a PR. Everything above is opt-in. ([KI-11](KNOWN_ISSUES.md))                                                                                          |
+| **No CI**                                        | Nothing runs on a PR. Everything above is opt-in. ([KI-11](../audit/KNOWN_ISSUES.md))                                                                                 |
 | No device/E2E tests                              | No Detox or Maestro; navigation and sensors are only unit-tested                                                                                                      |
 | Sensors tested via mocks only                    | A real 2.5 G shake threshold has never been validated on hardware — and for a trigger that summons help, false-negative and false-positive rates are product-critical |
 | No contract test between client and API          | `ApiClient` tests assert against hand-written mock responses, so the API could change shape without failing a test. The e2e suite is the only real guard              |
 | No load or soak testing                          | —                                                                                                                                                                     |
-| `apps/mobile/types.ts` vs `packages/types` drift | No test would catch it ([KI-6](KNOWN_ISSUES.md))                                                                                                                      |
+| `apps/mobile/types.ts` vs `packages/types` drift | No test would catch it ([KI-6](../audit/KNOWN_ISSUES.md))                                                                                                             |
 
 ### The CI workflow to add first
 

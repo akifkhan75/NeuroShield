@@ -1,0 +1,53 @@
+# Data Model
+
+> Target model. Current schema and its defects: [`../engineering/DATABASE.md`](../engineering/DATABASE.md).
+> Prisma 5 / PostgreSQL 15. **Migrations required from Phase 0** — none exist today.
+
+## Entities by phase
+
+| Phase | Entities                                                                                                                                                                                                                                                                                           |
+| ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0     | `User` · `TrustedContact` · **`HazardReport`** (replaces `DangerZone`, ADR-0010)                                                                                                                                                                                                                   |
+| 1     | `SafetyCircle` · `CircleMembership` · `SafetySession` · `Journey` · `LocationSnapshot` · `EmergencyIncident` · `IncidentEvent` · `EscalationPolicy` · `NotificationAttempt` · `NotificationEvent` · `ConsentRecord` · `Device` · `DeviceCapability` · `JourneyLink` · `RegionProfile` · `AuditLog` |
+| 2     | `EvidenceAsset` · `EvidenceAccessLog` · `DuressCredential`                                                                                                                                                                                                                                         |
+| 3     | `SafetySignal` · `ModelVersion`                                                                                                                                                                                                                                                                    |
+| 4     | `SafetyPlace` · `HazardConfirmation` · `Organization` · `OrganizationMembership` · `Responder`                                                                                                                                                                                                     |
+| 5     | `Subscription` · `Entitlement`                                                                                                                                                                                                                                                                     |
+
+## Rules
+
+**Geo.** `HazardReport` and `LocationSnapshot` carry `latitude`/`longitude` as `Float`,
+plus `accuracyM` and `capturedAt`, and a `geohash` indexed for radius queries. The
+current `top`/`left` CSS percentages are deleted — they carry no real location
+(ADR-0006).
+
+**Every location is a snapshot.** `capturedAt` + `accuracyM` are **non-nullable**, so
+the UI cannot render a fix without its age and precision (RES-10).
+
+**Append-only where it is evidence.** `IncidentEvent`, `NotificationEvent`,
+`EvidenceAccessLog` and `AuditLog` are never updated or deleted. A row's `state` is a
+materialised view of its latest event. The history _is_ the evidence (REC-1).
+
+**Idempotency.** `EmergencyIncident.idempotencyKey` unique. `NotificationAttempt`
+unique on `(incidentId, recipientId, channel, attemptNumber)`.
+
+**Consent is a record, not a flag.** `ConsentRecord` has subject, scope, grantedAt,
+revokedAt, region profile and version — because PRO-8 requires periodic
+re-confirmation and the history must be provable.
+
+**No demographic fields.** Not optional — **absent** from the schema. T7/C8.
+
+**Tenancy.** Every org-scoped table carries `organizationId`, enforced in application
+authorization **and** with database-level protection. Zero tolerance (F14).
+
+**PII at rest.** Field-level encryption for medical data and phone numbers (DB-3).
+
+**Retention.** Per region profile; `expiresAt` on hazard reports, location snapshots
+and evidence. Erasure propagates to backups within the profile SLA.
+
+## Indexes
+
+`HazardReport(geohash)`, `(reportedAt)`, `(expiresAt)` · `LocationSnapshot(sessionId, capturedAt)`
+· `EmergencyIncident(userId, createdAt)`, `(idempotencyKey)` unique
+· `NotificationAttempt(incidentId)`, `(state)` · `AuditLog(actorId, at)`.
+The current schema has **no explicit indexes at all** (DB-1).

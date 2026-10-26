@@ -70,7 +70,7 @@ Any of these — and the first is already on the roadmap:
 - Push notifications need deep links into `Emergency` or `Journey` (Phase 2)
 - An SOS incident needs state shared across screens
 - A third screen needs `dangerZones`
-- State must survive a cold start ([KI-4](../KNOWN_ISSUES.md))
+- State must survive a cold start ([KI-4](../audit/KNOWN_ISSUES.md))
 
 Likely replacement: TanStack Query for server state + one small Context for the
 session.

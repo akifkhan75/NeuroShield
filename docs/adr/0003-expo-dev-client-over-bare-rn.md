@@ -58,11 +58,11 @@ quietly** when absent, so the app still runs in Expo Go — without voice.
   regenerating it **breaks the Android build**
 - A remote builder must apply `patches/` — the most likely first-EAS-build failure
 - A stray top-level `/android/` directory of Gradle output remains from the bare-RN
-  era ([KI-13](../KNOWN_ISSUES.md))
+  era ([KI-13](../audit/KNOWN_ISSUES.md))
 
 **Follow-on**
 
-- No `eas.json` yet ([DEPLOYMENT.md](../DEPLOYMENT.md))
+- No `eas.json` yet ([DEPLOYMENT.md](../engineering/DEPLOYMENT.md))
 - iOS has not been built or tested
 
 ## Revisit when
