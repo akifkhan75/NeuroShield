@@ -140,7 +140,8 @@ commits, PRs and docs.
 The product is **Lumo** (2026-10-26). Earlier names — `NeuroShield`, `InSafe`,
 `guardian` — are gone from the live code and docs. Deliberate exceptions:
 `docs/archive/*` and `docs/adr/0001` keep the old names because they are historical
-records, and the repo _directory_ is still `NeuroShield/`.
+records. The repo directory, GitHub repo and git remote are all `Lumo` as of
+2026-10-27.
 
 Unrelated naming traps that remain:
 

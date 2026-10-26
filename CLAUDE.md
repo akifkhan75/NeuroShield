@@ -24,8 +24,9 @@ packages are `@lumo/*`, the bundle id is `com.lumo.app`, and the wake word is
 checklist are in [`docs/BRANDING.md`](docs/BRANDING.md) and
 [ADR-0007](docs/adr/0007-name-the-product-lumo.md).
 
-> The **repo directory** is still `NeuroShield/` and the GitHub repo may be too —
-> renaming those is a manual step, see BRANDING.md.
+> The repo directory, the GitHub repo (`akifkhan75/Lumo`) and the git remote have
+> all been renamed too. GitHub redirects the old URLs, but that redirect breaks if
+> a new repo named `NeuroShield` is ever created under the same account.
 
 ---
 

@@ -102,7 +102,10 @@ SOS.
       not update itself
 - [ ] Recreate the dev database: `docker compose down -v && docker compose up -d postgres`,
       then `prisma db push && prisma db seed`. The old volume holds `neuroshield_db`
-- [ ] Rename the repo directory and the GitHub repo (set up a redirect)
+- [x] ~~Rename the repo directory and the GitHub repo~~ — done 2026-10-27:
+      `/Users/akifkhan/Projects/Lumo`, `akifkhan75/Lumo`, remote re-pointed over SSH.
+      GitHub redirects the old URLs; that redirect breaks if a repo named
+      `NeuroShield` is ever recreated under the same account
 - [ ] Validate the wake-word variant list on real hardware
 - [ ] App icon and splash screen — a light/glow mark, not another shield
 - [ ] `com.lumo.app` does not map to a domain you control, and is **immutable after
