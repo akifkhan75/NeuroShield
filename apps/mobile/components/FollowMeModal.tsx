@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, ImageBackground, Alert, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
-import { IconArrowLeft, IconShare, IconRoute } from '../constants';
+import { IconArrowLeft, IconShare } from '../constants';
 
 const Container = styled(View)`
   flex: 1;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { UserSettings } from '../types';
@@ -61,14 +61,6 @@ const ContactsRing = styled(View)`
     height: 256px;
     align-items: center;
     justify-content: center;
-`;
-
-const ContactCircleImage = styled(Image)`
-    width: 64px;
-    height: 64px;
-    border-radius: 32px;
-    border-width: 4px;
-    border-color: white;
 `;
 
 const LumoLogoContainer = styled(View)`

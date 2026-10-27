@@ -1,4 +1,3 @@
-import { Platform } from 'react-native';
 import { UserSettings, DangerZone, DangerZoneType, DangerZoneSeverity, FakeCallScript, PersonalInfo } from '@lumo/types';
 import { ApiClient } from '@lumo/api-client';
 

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Accelerometer } from 'expo-sensors';
-import { Platform } from 'react-native';
 
 type AccelerometerSubscription = ReturnType<typeof Accelerometer.addListener>;
 

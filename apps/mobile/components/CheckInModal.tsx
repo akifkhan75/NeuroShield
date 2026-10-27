@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -97,38 +97,42 @@ const CheckInScreen = () => {
   const route = useRoute();
   const { onEmergency } = route.params as { onEmergency: () => void; };
 
+  // The deadline is the source of truth, not a counter. Decrementing once per
+  // tick silently loses time whenever the JS thread is paused (backgrounded,
+  // Doze, Low Power Mode), so a check-in that should have expired would not
+  // fire. Deriving from a wall-clock deadline makes the timer correct the
+  // moment the app runs again.
+  //
+  // KNOWN LIMIT: this still only fires while the app is alive. Firing a missed
+  // check-in from a terminated app needs a scheduled background task, which is
+  // Phase 1 work (see docs/specs/SAFETY_CHECK.md).
+  const [deadline, setDeadline] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
-  const timerRef = useRef<any>(null);
-  const onClose = () => navigation.goBack();
 
-  const clearTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-  };
+  const onClose = useCallback(() => navigation.goBack(), [navigation]);
 
   useEffect(() => {
-    if (timeLeft === null) return;
-    if (timeLeft <= 0) {
-      clearTimer();
-      onClose();
-      onEmergency();
+    if (deadline === null) {
+      setTimeLeft(null);
       return;
     }
-    
-    timerRef.current = setInterval(() => {
-      setTimeLeft(prev => (prev !== null ? prev - 1 : null));
-    }, 1000);
+    const tick = () => setTimeLeft(Math.max(0, Math.ceil((deadline - Date.now()) / 1000)));
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [deadline]);
 
-    return () => clearTimer();
-  }, [timeLeft, onEmergency, onClose]);
+  useEffect(() => {
+    if (deadline === null || timeLeft === null || timeLeft > 0) return;
+    setDeadline(null);
+    onClose();
+    onEmergency();
+  }, [deadline, timeLeft, onClose, onEmergency]);
 
-  const handleStartTimer = (seconds: number) => setTimeLeft(seconds);
-  
+  const handleStartTimer = (seconds: number) => setDeadline(Date.now() + seconds * 1000);
+
   const handleCancelTimer = () => {
-    clearTimer();
-    setTimeLeft(null);
+    setDeadline(null);
     onClose();
   };
 
