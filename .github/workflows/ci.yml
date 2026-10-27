@@ -22,9 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # No `version:` — the root package.json's packageManager field is the
+      # single source of truth, and naming it twice is an error.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - uses: actions/setup-node@v4
         with:
@@ -83,9 +83,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # No `version:` — the root package.json's packageManager field is the
+      # single source of truth, and naming it twice is an error.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - uses: actions/setup-node@v4
         with:
