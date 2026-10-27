@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { ActivityIndicator, Alert, Animated, Easing } from 'react-native';
 import { NavigationContainer, useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ActionButton, BottomNavContainer, Container, DangerZonePinContainer, ErrorContainer, ErrorText, Header, HeaderActions, HeaderTextContainer, HelloText, LoadingContainer, LocationText, MapImage, MapViewContainer, NavItemContainer, NavItemLabel, PinCircleBase, PinPulseCircle, SafetyAssistantButton, SOSButton, SOSButtonContainer, SOSText, UserImage, UserImageContainer, UserImagePulse, UserLocationPinContainer, VoiceGuardText } from './App.styled';
+import { ActionButton, BottomNavContainer, Container, DangerZonePinContainer, DemoMapNotice, ErrorContainer, ErrorText, Header, HeaderActions, HeaderTextContainer, HelloText, LoadingContainer, LocationText, MapImage, MapViewContainer, NavItemContainer, NavItemLabel, PinCircleBase, PinPulseCircle, SafetyAssistantButton, SOSButton, SOSButtonContainer, SOSText, UserImage, UserImageContainer, UserImagePulse, UserLocationPinContainer, VoiceGuardText } from './App.styled';
 import { useShakeDetector } from './hooks/useShakeDetector';
 import { useVoiceActivation } from './hooks/useVoiceActivation';
 import { useAccidentDetector } from './hooks/useAccidentDetector';
@@ -24,6 +24,7 @@ import CheckInScreen from './components/CheckInModal';
 import CommunitySafetyScreen from './components/CommunitySafetyModal';
 import ReportDangerZoneScreen from './components/ReportDangerZoneModal';
 import SafetyAssistantScreen from './components/SafetyAssistantModal';
+import DemoBanner from './components/common/DemoBanner';
 
 
 const DangerZonePin = ({ zone }: { zone: DangerZone }) => {
@@ -195,7 +196,7 @@ const DashboardScreen = () => {
          <Header>
             <HeaderTextContainer>
                 <HelloText>Hello {userSettings.personalInfo.fullName},</HelloText>
-                <LocationText>San diago, 8453 Street, Italy</LocationText>
+<LocationText>Location unavailable — Lumo does not read your position yet</LocationText>
                 {isListening && <VoiceGuardText><IconMic size={12} color="#16a34a" /> Voice Guard Active</VoiceGuardText>}
             </HeaderTextContainer>
             <HeaderActions>
@@ -207,6 +208,12 @@ const DashboardScreen = () => {
                 </ActionButton>
             </HeaderActions>
          </Header>
+         <DemoMapNotice>
+            <DemoBanner>
+              The map is a static picture. The pins are sample reports placed at
+              random — they are not positions, and the avatar is not you.
+            </DemoBanner>
+         </DemoMapNotice>
          <UserLocationPinContainer style={{transform: [{translateX: -32}, {translateY: -32}]}}>
             <UserImagePulse style={{ transform: [{ scale: pulseAnim }] }} />
             <UserImageContainer>

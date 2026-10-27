@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { IconArrowLeft, IconTimer } from '../constants';
+import DemoBanner from './common/DemoBanner';
 
 const Container = styled(View)`
   flex: 1;
@@ -152,17 +153,22 @@ const CheckInScreen = () => {
         <Title>Scheduled Check-In</Title>
       </Header>
       
+      <DemoBanner>
+        A missed check-in opens the SOS screen locally. No contact is messaged,
+        and the timer only runs while this app is open.
+      </DemoBanner>
+
       <Body>
         {timeLeft !== null ? (
           <>
             <Description>Check-in required in:</Description>
             <TimerText>{formatTime(timeLeft)}</TimerText>
-            <Description style={{fontSize: 12}}>If you don't check-in before the timer runs out, an emergency alert will be automatically triggered.</Description>
+            <Description style={{fontSize: 12}}>If the timer runs out, Lumo opens the SOS screen on this phone. It does not yet contact anyone for you.</Description>
           </>
         ) : (
           <>
             <IconTimer size={96} color="#3b82f6" style={{marginBottom: 16}}/>
-            <Description>Set a timer. If you don't cancel it in time, we'll automatically send an alert to your emergency contacts.</Description>
+            <Description>Set a timer. If you don't cancel it in time, Lumo opens the SOS screen on this phone.</Description>
             <TimeOptionsGrid>
               {TIME_OPTIONS.map(opt => (
                 <TimeOptionButton key={opt.value} onPress={() => handleStartTimer(opt.value)}>
