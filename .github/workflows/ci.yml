@@ -99,10 +99,16 @@ jobs:
         working-directory: apps/api
         run: pnpm db:deploy
 
+      # The shadow database must exist before migrate diff can replay the
+      # migration history into it. Created through Prisma rather than psql so
+      # the job does not depend on a client being present on the runner.
+      - name: Create the shadow database
+        working-directory: apps/api
+        run: echo 'CREATE DATABASE lumo_shadow;' | pnpm exec prisma db execute --url "$DATABASE_URL" --stdin
+
       - name: Fail if the schema has drifted from the migration history
         working-directory: apps/api
         run: |
-          psql "$DATABASE_URL" -c 'CREATE DATABASE lumo_shadow;' >/dev/null 2>&1 || true
           DIFF=$(pnpm exec prisma migrate diff \
             --from-migrations prisma/migrations \
             --to-schema-datamodel prisma/schema.prisma \
